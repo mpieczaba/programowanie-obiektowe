@@ -1,6 +1,7 @@
 plugins {
     // Apply the application plugin to add support for building a CLI application in Java.
-    id 'application'
+    id 'java'
+    id 'application' 
 }
 
 repositories {
@@ -14,11 +15,15 @@ dependencies {
 
     // This dependency is used by the application.
     implementation 'com.google.guava:guava:31.1-jre'
-    
-    // https://mvnrepository.com/artifact/com.corundumstudio.socketio/netty-socketio
-    implementation 'com.corundumstudio.socketio:netty-socketio:1.7.25'
 
     implementation 'io.github.cdimascio:dotenv-java:3.0.0'
+
+    implementation 'io.javalin:javalin-bundle:5.5.0'
+}
+
+jar {
+    archiveBaseName = 'backend'
+    archiveVersion =  '0.0.1'
 }
 
 // Apply a specific Java toolchain to ease working on different environments.

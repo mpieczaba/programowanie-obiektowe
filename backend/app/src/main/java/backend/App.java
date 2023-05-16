@@ -2,10 +2,7 @@ package backend;
 
 import io.github.cdimascio.dotenv.Dotenv;
 
-import com.corundumstudio.socketio.Configuration;
-import com.corundumstudio.socketio.SocketIOServer;
-import com.corundumstudio.socketio.SocketIOClient;
-import com.corundumstudio.socketio.listener.ConnectListener;
+import io.javalin.Javalin;
 
 public class App {
     // Load environment variables for the .env file
@@ -13,30 +10,19 @@ public class App {
     // single instance of Dotenv via static function calls)
     public static final Dotenv env = Dotenv.configure().directory("../../").load();
 
-    // Socket.IO server
-    private final SocketIOServer ws;
+    private final Javalin server;
 
     public App() {
-        // Create a Socket.IO server instance
-        this.ws = new SocketIOServer(new Configuration() {
-            {
-                setHostname(App.env.get("HOST"));
-                setPort(Integer.parseInt(App.env.get("PORT")));
-            }
-        });
-
-        // Add connection listener to the Socket.IO server
-        this.ws.addConnectListener(new ConnectListener() {
-            public void onConnect(SocketIOClient client) {
-                client.sendEvent("programowanie obiektowe");
-            }
-        });
+        // Create a new Javalin server instance
+        this.server = Javalin.create(cfg -> cfg.plugins.enableDevLogging());
     }
 
-    // Function run starts the app
+    // Start the app
     public void run() {
         System.out.println("Starting...");
-        this.ws.start();
+
+        // Start the Javalin server on localhost:<PORT> (8080 by default)
+        this.server.start(Integer.parseInt(App.env.get("PORT")));
     }
 
     public static void main(String[] args) {
