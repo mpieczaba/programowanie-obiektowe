@@ -19,6 +19,8 @@ dependencies {
     implementation 'io.github.cdimascio:dotenv-java:3.0.0'
 
     implementation 'io.javalin:javalin-bundle:5.5.0'
+
+    implementation 'com.github.0xshamil:java-xid:1.0.0'
 }
 
 jar {

@@ -10,11 +10,12 @@ public class App {
     // single instance of Dotenv via static function calls)
     public static final Dotenv env = Dotenv.configure().directory("../../").load();
 
-    private final Javalin server;
+    // Javalin server instance
+    private final Javalin server = Javalin.create(cfg -> cfg.plugins.enableDevLogging());
 
     public App() {
-        // Create a new Javalin server instance
-        this.server = Javalin.create(cfg -> cfg.plugins.enableDevLogging());
+        // Set up routes
+        this.server.routes(Router::getRoutes);
     }
 
     // Start the app
