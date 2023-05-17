@@ -22,8 +22,8 @@ public class App {
     public void run() {
         System.out.println("Starting...");
 
-        // Start the Javalin server on localhost:<PORT> (8080 by default)
-        this.server.start(Integer.parseInt(App.env.get("PORT")));
+        // Start the Javalin server on <HOST>:<PORT> (localhost:8080 by default)
+        this.server.start(App.env.get("HOST"), Integer.parseInt(App.env.get("PORT")));
     }
 
     public static void main(String[] args) {
