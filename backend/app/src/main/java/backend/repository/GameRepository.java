@@ -18,8 +18,8 @@ public class GameRepository {
     }
 
     // Create a new game
-    public Game create(Player gameMaster) {
-        Game game = new Game(gameMaster);
+    public Game create(Player host) {
+        Game game = new Game(host);
 
         // Store game in the repository
         games.put(game.id, game);

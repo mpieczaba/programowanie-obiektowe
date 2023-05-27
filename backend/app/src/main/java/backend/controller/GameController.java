@@ -29,11 +29,11 @@ public class GameController extends Controller {
     // Create a new game
     public void create(Context ctx) {
         GameInput input = ctx.bodyValidator(GameInput.class)
-                .check(g -> g.gameMaster.nickname.length() > 3, "Nickname should contain at least four characters")
+                .check(g -> g.host.nickname.length() > 3, "Nickname should contain at least four characters")
                 .get();
 
-        Player gameMaster = this.repository.players.create(input.gameMaster.nickname);
-        Game game = this.repository.games.create(gameMaster);
+        Player host = this.repository.players.create(input.host.nickname);
+        Game game = this.repository.games.create(host);
 
         ctx.json(game).status(HttpStatus.CREATED);
     }

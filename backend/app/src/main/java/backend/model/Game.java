@@ -9,15 +9,15 @@ public class Game {
     // Unique game id
     public final String id = Xid.get().toString();
 
-    // Game master
-    public final Player gameMaster;
+    // Game host
+    public final Player host;
 
     // Players
     public final ArrayList<Player> players = new ArrayList<Player>();
 
-    public Game(Player gameMaster) {
-        this.gameMaster = gameMaster;
-        this.players.add(gameMaster);
+    public Game(Player host) {
+        this.host = host;
+        this.players.add(host);
     }
 
     public void addPlayer(Player player) {
