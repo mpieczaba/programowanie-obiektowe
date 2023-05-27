@@ -9,6 +9,7 @@ import java.util.Optional;
 import backend.model.Game;
 import backend.model.GameInput;
 import backend.model.Player;
+import backend.model.PlayerInput;
 import backend.repository.Repository;
 
 // GameController handles and processes requests from /games endpoints 
@@ -29,7 +30,7 @@ public class GameController extends Controller {
     // Create a new game
     public void create(Context ctx) {
         GameInput input = ctx.bodyValidator(GameInput.class)
-                .check(g -> g.host.nickname.length() > 3, "Nickname should contain at least four characters")
+                .check(g -> g.host.nickname.length() > 3, "Nickname should contain at least four characters!")
                 .get();
 
         Player host = this.repository.players.create(input.host.nickname);
@@ -38,10 +39,16 @@ public class GameController extends Controller {
         ctx.json(game).status(HttpStatus.CREATED);
     }
 
-    // Join the game with id
+    // Join game with id
     public void join(Context ctx, String id) {
+        PlayerInput input = ctx.bodyValidator(PlayerInput.class)
+                .check(p -> p.nickname.length() > 3, "Nickname should contain at least four characters!")
+                .get();
+
         Game game = this.repository.games.getById(id).get();
 
-        game.addPlayer(new Player("ddd"));
+        game.addPlayer(new Player(input.nickname));
+
+        ctx.json(game).status(HttpStatus.CREATED);
     }
 }

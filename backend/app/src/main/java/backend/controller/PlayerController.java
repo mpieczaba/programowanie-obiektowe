@@ -19,7 +19,7 @@ public class PlayerController extends Controller {
         Optional<Player> player = this.repository.players.getById(id);
 
         player.map(ctx::json).orElseThrow(() -> {
-            throw new NotFoundResponse("Player not found");
+            throw new NotFoundResponse("Player not found!");
         });
     }
 }
