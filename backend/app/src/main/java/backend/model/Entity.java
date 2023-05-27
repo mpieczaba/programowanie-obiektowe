@@ -1,6 +1,6 @@
 package backend.model;
 
-public class Entity {
+public abstract class Entity {
     // x and y coordinates of the entity
     public Point position;
 
