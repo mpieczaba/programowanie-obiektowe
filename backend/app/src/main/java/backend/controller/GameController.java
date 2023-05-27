@@ -11,12 +11,10 @@ import backend.model.GameInput;
 import backend.model.Player;
 import backend.repository.Repository;
 
-// GameController handles and process requests from /games endpoints 
-public class GameController {
-    private final Repository repository;
-
+// GameController handles and processes requests from /games endpoints 
+public class GameController extends Controller {
     public GameController(Repository repository) {
-        this.repository = repository;
+        super(repository);
     }
 
     // Get game by id
@@ -38,5 +36,12 @@ public class GameController {
         Game game = this.repository.games.create(gameMaster);
 
         ctx.json(game).status(HttpStatus.CREATED);
+    }
+
+    // Join the game with id
+    public void join(Context ctx, String id) {
+        Game game = this.repository.games.getById(id).get();
+
+        game.addPlayer(new Player("ddd"));
     }
 }

@@ -13,22 +13,25 @@ public class Router {
     private final static Repository repository = new Repository();
 
     private static final void playerRoutes() {
-        final PlayerController playerConroller = new PlayerController(repository);
+        final PlayerController playerController = new PlayerController(repository);
 
         // Get /players/:id
-        get("{id}", ctx -> playerConroller.getById(ctx, ctx.pathParam("id")));
+        get("{id}", ctx -> playerController.getById(ctx, ctx.pathParam("id")));
     }
 
     private static final void gameRoutes() {
         final GameController gameController = new GameController(repository);
 
-        // GET /games/:id
-        get("{id}", ctx -> gameController.getById(ctx, ctx.pathParam("id")));
+        path("{id}", () -> {
+            // GET /games/:id
+            get(ctx -> gameController.getById(ctx, ctx.pathParam("id")));
+
+            // POST /games/:id/join
+            post("join", ctx -> gameController.join(ctx, ctx.pathParam("id")));
+        });
 
         // POST /games
         post(ctx -> gameController.create(ctx));
-
-        // TODO: POST /games/:id/join etc.
     }
 
     public static final void getRoutes() {

@@ -1,5 +1,7 @@
 package backend.model;
 
+import java.util.ArrayList;
+
 import com.github.shamil.Xid;
 
 // Game model
@@ -10,7 +12,15 @@ public class Game {
     // Game master
     public final Player gameMaster;
 
+    // Players
+    public final ArrayList<Player> players = new ArrayList<Player>();
+
     public Game(Player gameMaster) {
         this.gameMaster = gameMaster;
+        this.players.add(gameMaster);
+    }
+
+    public void addPlayer(Player player) {
+        this.players.add(player);
     }
 }

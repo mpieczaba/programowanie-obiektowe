@@ -8,12 +8,10 @@ import java.util.Optional;
 import backend.model.Player;
 import backend.repository.Repository;
 
-// PlayerController handles and process requests from /players endpoints 
-public class PlayerController {
-    private final Repository repository;
-
+// PlayerController handles and processes requests from /players endpoints 
+public class PlayerController extends Controller {
     public PlayerController(Repository repository) {
-        this.repository = repository;
+        super(repository);
     }
 
     // Get player by id
