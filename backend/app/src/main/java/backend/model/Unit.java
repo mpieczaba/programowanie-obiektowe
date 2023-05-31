@@ -5,7 +5,7 @@ public abstract class Unit extends Entity {
     // Represents range of the character
     protected final int range;
 
-    // Damage taken for a single hit
+    // Damage given by a single hit
     protected final int damage;
 
     // Ticks between hits
