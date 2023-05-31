@@ -28,7 +28,7 @@ public abstract class Unit extends Entity {
     public abstract void boostDamage();
 
     // Logic under boosting movement speed for a given unit class
-    public abstract void boostMovementSeed();
+    public abstract void boostMovementSpeed();
 
     // Logic under boosting attack speed for a given unit class
     public abstract void boostAttackSpeed();
