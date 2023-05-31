@@ -11,7 +11,7 @@ public class Warrior extends Unit {
     }
 
     @Override
-    public void boostMovementSeed() {
+    public void boostMovementSpeed() {
         // TODO: Implement boosting movement speed logic
 
     }
