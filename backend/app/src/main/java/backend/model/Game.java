@@ -16,7 +16,7 @@ public class Game {
     public final ArrayList<Player> players = new ArrayList<Player>();
 
     // Game board
-    private final Board board = new Board();
+    public final Board board = new Board();
 
     public Game(Player host) {
         // Set player as a host and add it to the players list

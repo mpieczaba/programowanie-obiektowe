@@ -4,14 +4,24 @@
 package backend;
 
 import org.junit.Test;
-// import static org.junit.Assert.*;
+import static org.junit.Assert.*;
+
+import backend.model.Game;
+import backend.model.Player;
+import backend.model.Point;
 
 public class AppTest {
     @Test
-    public void appHasAGreeting() {
-        // TODO: Add unit tests
-        // App classUnderTest = new App();
-
-        // assertNotNull("app should have a greeting", classUnderTest.getGreeting());
+    public void dumbtest() {
+    	// mati: zielony, fiotetowy: domino
+    	Player host = new Player("mati");
+    	//System.out.printf("chuj: %s, %s\n", host.nickname, host.id);
+    	Player guest = new Player("domino");
+    	Game game = new Game(host);
+    	game.addPlayer(guest);
+    	assertEquals(1,1);
+    	//assertEquals(game.board.getEntityByPosition(new Point(6,11)), null);
+    	//assert(game.board.getEntityByPosition(new Point(6,11)) == null);
+    	//assert(game.board.getEntityByPosition(new Point(7,11)) == null);
     }
 }
