@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import org.javatuples.Pair;
+
 import com.github.shamil.Xid;
 
 // Game model
@@ -18,7 +20,7 @@ public class Game {
     public final ArrayList<Player> players = new ArrayList<Player>();
 
     // Game board
-    private final Board board = new Board();
+    public final Board board = new Board();
 
     // Current game turn
     private Turn currentTurn = new Turn(board);
@@ -37,7 +39,8 @@ public class Game {
         // Put host's castle on the board
         try {
             // NOTE: storing position both in map and in entity feels kinda weird to me
-            this.board.placeNewEntity(new Point(6, 11), new Castle(host, new Point(6, 11)));
+            this.board.placeNewEntity(new Pair<Integer, Integer>(6, 11),
+                    new Castle(host, new Pair<Integer, Integer>(6, 11)));
         } catch (Exception e) {
             System.out.println("Something went terribly wrong when putting host's castle on the board!");
             System.exit(-1);
@@ -62,7 +65,7 @@ public class Game {
                     break;
 
                 default:
-                    System.out.println("tick");
+                    this.game.currentTurn.nextTick();
             }
         }
     }

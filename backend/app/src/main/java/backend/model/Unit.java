@@ -1,5 +1,7 @@
 package backend.model;
 
+import org.javatuples.Pair;
+
 // Unit is an abstract representation of a fighting character
 public abstract class Unit extends Entity {
     // Represents range of the character
@@ -18,7 +20,8 @@ public abstract class Unit extends Entity {
     // Unit's target
     private Unit target;
 
-    public Unit(Player owner, Point position, int range, int damage, int attackSpeed, int movementSpeed, Unit target) {
+    public Unit(Player owner, Pair<Integer, Integer> position, int range, int damage, int attackSpeed,
+            int movementSpeed, Unit target) {
         super(owner, position);
 
         this.range = range;

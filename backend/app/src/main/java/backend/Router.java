@@ -34,6 +34,10 @@ public class Router {
 
             // POST /games/:id/pause
             post("pause", ctx -> gameController.pause(ctx, ctx.pathParam("id")));
+
+            path("entities", () -> {
+                post("boost", ctx -> gameController.boostEntity(ctx, ctx.pathParam("id")));
+            });
         });
 
         // POST /games

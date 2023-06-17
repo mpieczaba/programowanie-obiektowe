@@ -7,6 +7,8 @@ import io.javalin.http.ForbiddenResponse;
 
 import java.util.Optional;
 
+import org.javatuples.Pair;
+
 import backend.model.Game;
 import backend.model.GameInput;
 import backend.model.GameResponse;
@@ -85,6 +87,14 @@ public class GameController extends Controller {
             }
         }, () -> {
             throw new NotFoundResponse("Game not found");
+        });
+    }
+
+    public void boostEntity(Context ctx, String id) {
+        Optional<Game> game = this.repository.games.getById(id);
+
+        game.ifPresent(g -> {
+            g.board.getEntityByPosition(new Pair<Integer, Integer>(0, 0));
         });
     }
 }

@@ -12,12 +12,20 @@ public class Turn {
 
     public Turn(Board board) {
         this.board = board;
-        this.state = new Boosting(board);
     }
 
     public void nextTick() {
-        this.tick++;
+        System.out.println(this.tick);
+
+        if (this.tick == 0)
+            this.state = new Boosting(board);
+        if (this.tick == 500)
+            this.state = new Simulation(board);
+
+        this.state.run();
 
         // TODO: Add looping through entities and updating their state, etc.
+
+        this.tick = ++tick % 1000;
     }
 }

@@ -21,6 +21,8 @@ dependencies {
     implementation 'io.javalin:javalin-bundle:5.5.0'
 
     implementation 'com.github.0xshamil:java-xid:1.0.0'
+
+    implementation 'org.javatuples:javatuples:1.2'
 }
 
 jar {
