@@ -1,6 +1,8 @@
 package backend.model;
 
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import com.github.shamil.Xid;
 
@@ -39,6 +41,37 @@ public class Game {
         }
     }
 
+    // LoopTask defines the game loop task
+    private class LoopTask extends TimerTask {
+        // Reference to the game
+        private Game game;
+
+        public LoopTask(Game game) {
+            this.game = game;
+        }
+
+        @Override
+        public void run() {
+            switch (this.game.state) {
+                case FINISHED:
+                case PAUSED:
+                    this.cancel();
+                    break;
+
+                default:
+                    System.out.println("tick");
+            }
+        }
+    }
+
+    // Starts the game loop
+    private void loop() {
+        Timer timer = new Timer();
+
+        // TODO: Change tick rate
+        timer.scheduleAtFixedRate(new LoopTask(this), 0, 3000);
+    }
+
     // Starts the game
     public void start() throws Exception {
         switch (this.state) {
@@ -46,7 +79,8 @@ public class Game {
             case PAUSED:
                 this.state = GameState.RUNNING;
 
-                // TODO: Add logic behind starting the game
+                // Start game loop
+                this.loop();
                 break;
 
             default:
@@ -59,8 +93,6 @@ public class Game {
         switch (this.state) {
             case RUNNING:
                 this.state = GameState.PAUSED;
-
-                // TODO: Add logic behind pausing the game
                 break;
 
             default:
