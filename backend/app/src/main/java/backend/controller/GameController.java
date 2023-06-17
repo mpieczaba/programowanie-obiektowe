@@ -10,10 +10,10 @@ import java.util.Optional;
 import org.javatuples.Pair;
 
 import backend.model.Game;
-import backend.model.GameInput;
-import backend.model.GameResponse;
 import backend.model.Player;
-import backend.model.PlayerInput;
+import backend.model.api.GameInput;
+import backend.model.api.GameResponse;
+import backend.model.api.PlayerInput;
 import backend.repository.Repository;
 
 // GameController handles and processes requests from /games endpoints 

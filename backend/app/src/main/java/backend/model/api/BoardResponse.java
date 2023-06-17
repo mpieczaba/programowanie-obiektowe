@@ -1,6 +1,9 @@
-package backend.model;
+package backend.model.api;
 
 import java.util.ArrayList;
+
+import backend.model.Board;
+import backend.model.Unit;
 
 public class BoardResponse {
     public final ArrayList<Unit> units;
