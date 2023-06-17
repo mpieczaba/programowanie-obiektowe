@@ -15,7 +15,7 @@ public class Turn {
     }
 
     public void nextTick() {
-        System.out.println(this.tick);
+        // System.out.println(this.tick);
 
         if (this.tick == 0)
             this.state = new Boosting(board);

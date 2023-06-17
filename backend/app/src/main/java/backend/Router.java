@@ -16,27 +16,30 @@ public class Router {
         final PlayerController playerController = new PlayerController(repository);
 
         // Get /players/:id
-        get("{id}", ctx -> playerController.getById(ctx, ctx.pathParam("id")));
+        get("{player_id}", ctx -> playerController.getById(ctx, ctx.pathParam("player_id")));
     }
 
     private static final void gameRoutes() {
         final GameController gameController = new GameController(repository);
 
-        path("{id}", () -> {
+        path("{game_id}", () -> {
             // GET /games/:id
-            get(ctx -> gameController.getById(ctx, ctx.pathParam("id")));
+            get(ctx -> gameController.getById(ctx, ctx.pathParam("game_id")));
 
             // POST /games/:id/join
-            post("join", ctx -> gameController.join(ctx, ctx.pathParam("id")));
+            post("join", ctx -> gameController.join(ctx, ctx.pathParam("game_id")));
 
             // POST /games/:id/start
-            post("start", ctx -> gameController.start(ctx, ctx.pathParam("id")));
+            post("start", ctx -> gameController.start(ctx, ctx.pathParam("game_id")));
 
             // POST /games/:id/pause
-            post("pause", ctx -> gameController.pause(ctx, ctx.pathParam("id")));
+            post("pause", ctx -> gameController.pause(ctx, ctx.pathParam("game_id")));
 
-            path("entities", () -> {
-                post("boost", ctx -> gameController.boostEntity(ctx, ctx.pathParam("id")));
+            path("units", () -> {
+                path("boost", () -> {
+                    // POST /games/:id/units/boost/damage
+                    post("damage", ctx -> gameController.boostUnitDamage(ctx, ctx.pathParam("game_id")));
+                });
             });
         });
 

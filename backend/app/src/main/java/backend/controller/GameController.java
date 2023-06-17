@@ -90,11 +90,20 @@ public class GameController extends Controller {
         });
     }
 
-    public void boostEntity(Context ctx, String id) {
+    public void boostUnitDamage(Context ctx, String id) {
         Optional<Game> game = this.repository.games.getById(id);
 
-        game.ifPresent(g -> {
-            g.board.getEntityByPosition(new Pair<Integer, Integer>(0, 0));
+        game.ifPresentOrElse(g -> {
+            try {
+                g.board.getUnitByPosition(new Pair<Integer, Integer>(0, 0))
+                        .ifPresentOrElse(u -> u.boostDamage(), () -> {
+                            throw new NotFoundResponse("Unit not found");
+                        });
+            } catch (Exception e) {
+                throw new NotFoundResponse("Entity not found");
+            }
+        }, () -> {
+            throw new NotFoundResponse("Game not found");
         });
     }
 }
