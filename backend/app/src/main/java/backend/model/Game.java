@@ -26,6 +26,9 @@ public class Game {
     // Game state
     private GameState state = GameState.INITIATED;
 
+    // Ticks per second
+    private static final int TPS = 30;
+
     public Game(Player host) {
         // Set player as a host and add it to the players list
         this.host = host;
@@ -68,8 +71,7 @@ public class Game {
     private void loop() {
         Timer timer = new Timer();
 
-        // TODO: Change tick rate
-        timer.scheduleAtFixedRate(new LoopTask(this), 0, 3000);
+        timer.scheduleAtFixedRate(new LoopTask(this), 0, 1000 / Game.TPS);
     }
 
     // Starts the game
