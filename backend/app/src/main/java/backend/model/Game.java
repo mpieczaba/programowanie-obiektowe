@@ -41,6 +41,9 @@ public class Game {
             // NOTE: storing position both in map and in entity feels kinda weird to me
             this.board.placeNewCastle(new Pair<Integer, Integer>(6, 11),
                     new Castle(host, new Pair<Integer, Integer>(6, 11)));
+
+            this.board.placeNewUnit(new Pair<Integer, Integer>(0, 0),
+                    new Warrior(host, new Pair<Integer, Integer>(0, 0), null));
         } catch (Exception e) {
             System.out.println("Something went terribly wrong when putting host's castle on the board!");
             System.exit(-1);

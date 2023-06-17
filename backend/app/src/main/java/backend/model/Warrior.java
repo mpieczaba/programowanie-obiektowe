@@ -9,7 +9,7 @@ public class Warrior extends Unit {
 
     @Override
     public void boostDamage() {
-        // TODO: Implement boosting damage logic
+        this.damage += 10;
     }
 
     @Override

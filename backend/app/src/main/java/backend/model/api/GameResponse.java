@@ -13,9 +13,13 @@ public class GameResponse {
     // Players
     public final ArrayList<Player> players;
 
+    // Board
+    public final BoardResponse board;
+
     public GameResponse(Game game) {
         this.id = game.id;
         this.host = game.host;
         this.players = game.players;
+        this.board = new BoardResponse(game.board);
     }
 }

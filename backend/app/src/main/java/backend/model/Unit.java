@@ -8,7 +8,7 @@ public abstract class Unit extends Entity {
     protected final int range;
 
     // Damage given by a single hit
-    protected final int damage;
+    public int damage;
 
     // Ticks between hits
     protected final int attackSpeed;

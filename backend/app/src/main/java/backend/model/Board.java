@@ -12,7 +12,7 @@ public class Board {
     private final ConcurrentHashMap<String, Castle> castles = new ConcurrentHashMap<>();
 
     // Units on the board
-    private final ConcurrentHashMap<String, Unit> units = new ConcurrentHashMap<>();
+    public final ConcurrentHashMap<String, Unit> units = new ConcurrentHashMap<>();
 
     // Represents entities located on a 2D plane of the board with their id
     private final ConcurrentHashMap<Pair<Integer, Integer>, String> tiles = new ConcurrentHashMap<>();
