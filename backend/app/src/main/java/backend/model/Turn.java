@@ -12,6 +12,7 @@ public class Turn {
 
     public Turn(Board board) {
         this.board = board;
+        this.state = new Boosting(board);
     }
 
     public void nextTick() {

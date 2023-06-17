@@ -1,8 +1,8 @@
 package backend.model;
 
 public class Warrior extends Unit {
-    public Warrior(Player owner, Point position) {
-        super(owner, position, 1, 10, 10, 30);
+    public Warrior(Player owner, Point position, Unit target) {
+        super(owner, position, 1, 10, 10, 30, target);
     }
 
     @Override

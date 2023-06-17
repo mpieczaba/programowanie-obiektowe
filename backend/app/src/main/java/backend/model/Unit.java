@@ -15,13 +15,17 @@ public abstract class Unit extends Entity {
     // tile to another
     protected final int movementSpeed;
 
-    public Unit(Player owner, Point position, int range, int damage, int attackSpeed, int movementSpeed) {
+    // Unit's target
+    private Unit target;
+
+    public Unit(Player owner, Point position, int range, int damage, int attackSpeed, int movementSpeed, Unit target) {
         super(owner, position);
 
         this.range = range;
         this.damage = damage;
         this.attackSpeed = attackSpeed;
         this.movementSpeed = movementSpeed;
+        this.target = target;
     }
 
     // Logic under boosting damage for a given unit class
@@ -32,4 +36,12 @@ public abstract class Unit extends Entity {
 
     // Logic under boosting attack speed for a given unit class
     public abstract void boostAttackSpeed();
+
+    private void giveDamage() {
+        this.target.takeDamage(this.damage);
+    }
+
+    public void nextMove() {
+
+    }
 }

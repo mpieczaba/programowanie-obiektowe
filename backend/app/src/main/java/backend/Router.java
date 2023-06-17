@@ -28,6 +28,12 @@ public class Router {
 
             // POST /games/:id/join
             post("join", ctx -> gameController.join(ctx, ctx.pathParam("id")));
+
+            // POST /games/:id/start
+            post("start", ctx -> gameController.start(ctx, ctx.pathParam("id")));
+
+            // POST /games/:id/pause
+            post("pause", ctx -> gameController.pause(ctx, ctx.pathParam("id")));
         });
 
         // POST /games

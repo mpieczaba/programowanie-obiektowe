@@ -3,6 +3,7 @@ package backend.controller;
 import io.javalin.http.Context;
 import io.javalin.http.HttpStatus;
 import io.javalin.http.NotFoundResponse;
+import io.javalin.http.ForbiddenResponse;
 
 import java.util.Optional;
 
@@ -46,10 +47,44 @@ public class GameController extends Controller {
                 .check(p -> p.nickname.length() > 3, "Nickname should contain at least four characters!")
                 .get();
 
-        Game game = this.repository.games.getById(id).get();
+        Optional<Game> game = this.repository.games.getById(id);
 
-        game.addPlayer(new Player(input.nickname));
+        game.ifPresentOrElse(g -> {
+            g.addPlayer(new Player(input.nickname));
 
-        ctx.json(new GameResponse(game)).status(HttpStatus.CREATED);
+            ctx.json(new GameResponse(g)).status(HttpStatus.CREATED);
+        }, () -> {
+            throw new NotFoundResponse("Game not found");
+        });
+    }
+
+    // Start game
+    public void start(Context ctx, String id) {
+        Optional<Game> game = this.repository.games.getById(id);
+
+        game.ifPresentOrElse(g -> {
+            try {
+                g.start();
+            } catch (Exception e) {
+                throw new ForbiddenResponse("Cannot start the game");
+            }
+        }, () -> {
+            throw new NotFoundResponse("Game not found");
+        });
+    }
+
+    // Pause the game
+    public void pause(Context ctx, String id) {
+        Optional<Game> game = this.repository.games.getById(id);
+
+        game.ifPresentOrElse(g -> {
+            try {
+                g.pause();
+            } catch (Exception e) {
+                throw new ForbiddenResponse("Cannot pause the game");
+            }
+        }, () -> {
+            throw new NotFoundResponse("Game not found");
+        });
     }
 }
