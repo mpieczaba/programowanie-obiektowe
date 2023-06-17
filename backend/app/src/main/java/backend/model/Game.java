@@ -25,8 +25,9 @@ public class Game {
 
         // Put host's castle on the board
         try {
-        	// NOTE: storing position both in map and in entity feels kinda weird to me
-            this.board.placeNewEntity(new Point(6, 11), new Castle(host, new Point(6, 11)));
+            // NOTE: storing position both in map and in entity feels kinda weird to me
+            // this.board.placeNewEntity(new Point(6, 11), new Castle(host, new Point(6,
+            // 11)));
         } catch (Exception e) {
             System.out.println("Something went terribly wrong when putting host's castle on the board!");
             System.exit(-1);

@@ -8,6 +8,7 @@ import java.util.Optional;
 
 import backend.model.Game;
 import backend.model.GameInput;
+import backend.model.GameResponse;
 import backend.model.Player;
 import backend.model.PlayerInput;
 import backend.repository.Repository;
@@ -22,7 +23,7 @@ public class GameController extends Controller {
     public void getById(Context ctx, String id) {
         Optional<Game> game = this.repository.games.getById(id);
 
-        game.map(ctx::json).orElseThrow(() -> {
+        game.map(g -> ctx.json(new GameResponse(g))).orElseThrow(() -> {
             throw new NotFoundResponse("Game not found");
         });
     }
@@ -36,7 +37,7 @@ public class GameController extends Controller {
         Player host = this.repository.players.create(input.host.nickname);
         Game game = this.repository.games.create(host);
 
-        ctx.json(game).status(HttpStatus.CREATED);
+        ctx.json(new GameResponse(game)).status(HttpStatus.CREATED);
     }
 
     // Join game with id
@@ -49,6 +50,6 @@ public class GameController extends Controller {
 
         game.addPlayer(new Player(input.nickname));
 
-        ctx.json(game).status(HttpStatus.CREATED);
+        ctx.json(new GameResponse(game)).status(HttpStatus.CREATED);
     }
 }

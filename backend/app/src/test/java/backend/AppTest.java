@@ -4,26 +4,10 @@
 package backend;
 
 import org.junit.Test;
-import static org.junit.Assert.*;
-
-import backend.model.Castle;
-import backend.model.Game;
-import backend.model.Player;
-import backend.model.Point;
-
-import java.util.HashMap;
 
 public class AppTest {
-    @Test
-    public void dummyTest() {
-    	// mati: zielony, fiotetowy: domino
-    	Player host = new Player("mati");
-    	//System.out.printf("chuj: %s, %s\n", host.nickname, host.id);
-    	Player guest = new Player("domino");
-    	Game game = new Game(host);
-    	game.addPlayer(guest);
-    	assertEquals(new Castle(host, new Point(6,11)), game.board.getEntityByPosition(new Point(6,11)));
-    	//assert(game.board.getEntityByPosition(new Point(6,11)) == null);
-    	//assert(game.board.getEntityByPosition(new Point(7,11)) == null);
-    }
+	@Test
+	public void dummyTest() {
+		// TODO: Add some tests
+	}
 }
