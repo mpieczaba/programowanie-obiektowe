@@ -3,10 +3,14 @@ package backend.controller;
 import io.javalin.http.Context;
 import io.javalin.http.HttpStatus;
 import io.javalin.http.NotFoundResponse;
+import io.javalin.websocket.WsConnectContext;
+import io.javalin.websocket.WsContext;
 import io.javalin.http.ForbiddenResponse;
 
 import java.util.Optional;
 
+import org.eclipse.jetty.websocket.api.CloseStatus;
+import org.eclipse.jetty.websocket.api.StatusCode;
 import org.javatuples.Pair;
 
 import backend.model.game.Game;
@@ -14,6 +18,7 @@ import backend.model.game.GameInput;
 import backend.model.game.GameResponse;
 import backend.model.player.Player;
 import backend.model.player.PlayerInput;
+import backend.model.response.ResponseError;
 import backend.repository.Repository;
 
 // GameController handles and processes requests from /games endpoints 
@@ -104,6 +109,21 @@ public class GameController extends Controller {
             }
         }, () -> {
             throw new NotFoundResponse("Game not found");
+        });
+    }
+
+    public void wsConnect(WsConnectContext ctx, String id) throws Exception {
+        Optional<Game> game = this.repository.games.getById(id);
+
+        game.ifPresentOrElse(g -> {
+            g.addPlayerWithContext(ctx, id);
+
+            g.playerContexts.keySet().stream().filter(c -> c.session.isOpen()).forEach(session -> {
+                session.send("{\"message\": \"user joined the game\"}");
+            });
+        }, () -> {
+            ctx.send(new ResponseError("Game not found"));
+            ctx.closeSession(StatusCode.BAD_DATA, "Game not found");
         });
     }
 }

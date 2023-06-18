@@ -1,8 +1,10 @@
 package backend.model.game;
 
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.javatuples.Pair;
 
@@ -14,6 +16,8 @@ import backend.model.board.Board;
 import backend.model.player.Player;
 import backend.model.turn.Turn;
 
+import io.javalin.websocket.WsContext;
+
 // Game model
 public class Game {
     // Unique game id
@@ -21,6 +25,9 @@ public class Game {
 
     // Game host
     protected final Player host;
+
+    // Player contexts
+    public final Map<WsContext, String> playerContexts = new ConcurrentHashMap<>();
 
     // Players
     protected final ArrayList<Player> players = new ArrayList<Player>();
@@ -117,5 +124,9 @@ public class Game {
     // Adds player to the game
     public void addPlayer(Player player) {
         this.players.add(player);
+    }
+
+    public void addPlayerWithContext(WsContext ctx, String id) {
+        this.playerContexts.put(ctx, id);
     }
 }

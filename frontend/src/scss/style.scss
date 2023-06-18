@@ -1,3 +1,7 @@
+* {
+  font-family: "Press Start 2P", cursive;
+}
+
 body {
   margin: 0;
   padding: 0;
@@ -13,4 +17,46 @@ main {
   height: 100%;
   place-items: center;
   place-content: center;
+  background-color: #6495ed;
+}
+
+#new-game {
+  position: absolute;
+  padding: 2rem;
+  background-color: #f2f2f2;
+  color: #212529;
+}
+
+#nick {
+  display: flex;
+  flex-direction: column;
+  place-items: center;
+  gap: 1rem;
+
+  label {
+    text-align: center;
+  }
+
+  input {
+    outline: none;
+    text-align: center;
+  }
+
+  button:focus {
+    outline: none;
+    box-shadow: none;
+  }
+}
+
+.message-list {
+  position: absolute;
+  bottom: 0;
+  left: 15px;
+
+  section {
+    display: flex;
+    flex-direction: row;
+    gap: 2rem;
+    place-items: center;
+  }
 }

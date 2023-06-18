@@ -3,6 +3,7 @@ package backend;
 import static io.javalin.apibuilder.ApiBuilder.get;
 import static io.javalin.apibuilder.ApiBuilder.post;
 import static io.javalin.apibuilder.ApiBuilder.path;
+import static io.javalin.apibuilder.ApiBuilder.ws;
 
 import backend.controller.GameController;
 import backend.controller.PlayerController;
@@ -40,6 +41,10 @@ public class Router {
                     // POST /games/:id/units/boost/damage
                     post("damage", ctx -> gameController.boostUnitDamage(ctx, ctx.pathParam("game_id")));
                 });
+            });
+
+            ws(ws -> {
+                ws.onConnect(ctx -> gameController.wsConnect(ctx, ctx.pathParam("game_id")));
             });
         });
 
