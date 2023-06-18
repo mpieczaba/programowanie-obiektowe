@@ -1,4 +1,8 @@
-package backend.model;
+package backend.model.turn;
+
+import backend.model.Boosting;
+import backend.model.Simulation;
+import backend.model.board.Board;
 
 public class Turn {
     // Turn tick

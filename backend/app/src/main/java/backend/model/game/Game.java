@@ -1,4 +1,4 @@
-package backend.model;
+package backend.model.game;
 
 import java.util.ArrayList;
 import java.util.Timer;
@@ -7,6 +7,12 @@ import java.util.TimerTask;
 import org.javatuples.Pair;
 
 import com.github.shamil.Xid;
+
+import backend.model.Castle;
+import backend.model.Warrior;
+import backend.model.board.Board;
+import backend.model.player.Player;
+import backend.model.turn.Turn;
 
 // Game model
 public class Game {

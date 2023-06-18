@@ -1,9 +1,9 @@
-package backend.model.api;
+package backend.model.game;
 
 import java.util.ArrayList;
 
-import backend.model.Game;
-import backend.model.Player;
+import backend.model.board.BoardResponse;
+import backend.model.player.Player;
 
 // GameResponse contains public fields returned to the user in the API response
 public class GameResponse {

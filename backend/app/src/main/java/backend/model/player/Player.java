@@ -1,4 +1,4 @@
-package backend.model;
+package backend.model.player;
 
 import com.github.shamil.Xid;
 

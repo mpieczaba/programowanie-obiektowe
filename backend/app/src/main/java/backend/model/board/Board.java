@@ -1,9 +1,13 @@
-package backend.model;
+package backend.model.board;
 
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.javatuples.Pair;
+
+import backend.model.Castle;
+import backend.model.entity.Entity;
+import backend.model.unit.Unit;
 
 public class Board {
     private final Pair<Integer, Integer> dimension = new Pair<Integer, Integer>(11, 11);

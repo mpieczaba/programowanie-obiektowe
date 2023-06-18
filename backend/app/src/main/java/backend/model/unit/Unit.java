@@ -1,6 +1,9 @@
-package backend.model;
+package backend.model.unit;
 
 import org.javatuples.Pair;
+
+import backend.model.entity.Entity;
+import backend.model.player.Player;
 
 // Unit is an abstract representation of a fighting character
 public abstract class Unit extends Entity {

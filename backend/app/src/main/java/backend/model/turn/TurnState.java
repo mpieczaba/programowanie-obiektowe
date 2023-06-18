@@ -1,4 +1,6 @@
-package backend.model;
+package backend.model.turn;
+
+import backend.model.board.Board;
 
 public abstract class TurnState {
     // Reference to the game board

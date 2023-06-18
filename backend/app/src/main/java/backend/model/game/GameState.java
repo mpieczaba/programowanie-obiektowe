@@ -1,4 +1,4 @@
-package backend.model;
+package backend.model.game;
 
 // GameState represents inner state of the game  
 public enum GameState {

@@ -1,8 +1,10 @@
-package backend.model;
+package backend.model.entity;
 
 import org.javatuples.Pair;
 
 import com.github.shamil.Xid;
+
+import backend.model.player.Player;
 
 public abstract class Entity {
     // Unique game id

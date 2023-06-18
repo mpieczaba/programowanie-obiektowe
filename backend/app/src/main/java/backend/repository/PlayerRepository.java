@@ -4,7 +4,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 
-import backend.model.Player;
+import backend.model.player.Player;
 
 // PlayerRepository contains in-memory store of player instances
 public class PlayerRepository {

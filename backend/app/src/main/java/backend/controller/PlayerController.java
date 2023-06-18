@@ -5,7 +5,7 @@ import io.javalin.http.NotFoundResponse;
 
 import java.util.Optional;
 
-import backend.model.Player;
+import backend.model.player.Player;
 import backend.repository.Repository;
 
 // PlayerController handles and processes requests from /players endpoints 

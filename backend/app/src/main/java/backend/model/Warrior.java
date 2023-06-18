@@ -2,6 +2,9 @@ package backend.model;
 
 import org.javatuples.Pair;
 
+import backend.model.player.Player;
+import backend.model.unit.Unit;
+
 public class Warrior extends Unit {
     public Warrior(Player owner, Pair<Integer, Integer> position, Unit target) {
         super(owner, position, 1, 10, 10, 30, target);
