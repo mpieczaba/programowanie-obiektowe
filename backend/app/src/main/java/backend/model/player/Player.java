@@ -8,7 +8,7 @@ public class Player {
     public final String id = Xid.get().toString();
 
     // Player's nickname
-    public final String nickname;
+    protected final String nickname;
 
     public Player(String nickname) {
         this.nickname = nickname;

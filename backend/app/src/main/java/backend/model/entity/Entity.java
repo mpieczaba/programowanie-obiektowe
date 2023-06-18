@@ -11,10 +11,10 @@ public abstract class Entity {
     public final String id = Xid.get().toString();
 
     // x and y coordinates of the entity
-    public Pair<Integer, Integer> position;
+    protected Pair<Integer, Integer> position;
 
     // Entity health points
-    public int hp;
+    protected int hp;
 
     // Entity owner
     protected final Player owner;

@@ -20,10 +20,10 @@ public class Game {
     public final String id = Xid.get().toString();
 
     // Game host
-    public final Player host;
+    protected final Player host;
 
     // Players
-    public final ArrayList<Player> players = new ArrayList<Player>();
+    protected final ArrayList<Player> players = new ArrayList<Player>();
 
     // Game board
     public final Board board = new Board();
