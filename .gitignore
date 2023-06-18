@@ -5,3 +5,6 @@ build/
 .gradletasknamecache
 gradle-app.setting
 !gradle-wrapper.jar
+node_modules
+frontend/src/js
+frontend/src/css

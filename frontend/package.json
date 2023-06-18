@@ -1,0 +1,14 @@
+{
+  "name": "frontend",
+  "version": "0.0.1",
+  "main": "/src/js/main.js",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "dev": "tsc -w"
+  },
+  "devDependencies": {
+    "sass": "^1.63.4",
+    "typescript": "^5.1.3"
+  }
+}
