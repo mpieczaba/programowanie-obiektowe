@@ -1,3 +1,5 @@
+import UnitResponse from "./lib/model/UnitResponse.js";
+
 export default class UI {
   public balloon = document.getElementById("balloon") as HTMLDivElement;
   private balloonText = document.getElementById(
@@ -34,30 +36,33 @@ export default class UI {
     this.balloonText.innerText = message;
   }
 
+  public drawUnit(unit: UnitResponse) {
+    const tile = document.getElementById(
+      `tile-${unit.position.x}-${unit.position.y}`
+    ) as HTMLDivElement;
+
+    const progress = document.createElement("progress");
+    progress.max = 100;
+    progress.classList.add("hp");
+    progress.classList.add("nes-progress");
+    progress.classList.add("is-error");
+
+    const u = document.createElement("div");
+    u.id = unit.id;
+    u.draggable = true;
+    u.classList.add("unit");
+    u.appendChild(progress);
+    u.innerHTML += `<img src="img/barbarianV1.png" />`;
+
+    tile.appendChild(u);
+  }
+
   public drawMap() {
-    for (let i = 0; i < 9; i++) {
-      for (let j = 0; j < 12; j++) {
+    for (let x = 0; x < 9; x++) {
+      for (let y = 0; y < 12; y++) {
         const tile = document.createElement("div");
+        tile.id = `tile-${x}-${y}`;
         tile.classList.add("tile");
-
-        if (i == 4 && (j == 0 || j == 11)) {
-          const progress = document.createElement("progress");
-          progress.max = 100;
-          progress.classList.add("hp");
-          progress.classList.add("nes-progress");
-          progress.classList.add("is-error");
-
-          const castle = document.createElement("div");
-          castle.id = `castle-${i}-${j}`;
-          castle.draggable = true;
-          castle.classList.add("entity");
-          castle.appendChild(progress);
-          castle.innerHTML += `<img src="img/druidV1.png" />`;
-
-          castle.classList.add("castle");
-          tile.appendChild(castle);
-        }
-
         this.map.appendChild(tile);
       }
     }

@@ -48,5 +48,43 @@ export default class Controller {
     if (!gameId) return;
 
     this.client.connect(gameId);
+
+    this.client
+      .getGame(gameId)
+      .then((res) => {
+        res.board.units.forEach((unit) => {
+          this.ui.drawUnit(unit);
+          this.handleUnitDragAndDrop();
+        });
+      })
+      .catch((e) => console.log(e));
+  };
+
+  public handleUnitDragAndDrop = () => {
+    const units = document.querySelectorAll(
+      ".unit"
+    ) as NodeListOf<HTMLDivElement>;
+    units.forEach((unit: HTMLDivElement) => {
+      unit.addEventListener("dragstart", (e: DragEvent) => {
+        console.log(unit.id);
+        e.dataTransfer?.setData("text", unit.id);
+      });
+      unit.addEventListener("dragend", (e) => console.log(e));
+    });
+
+    const tiles = document.querySelectorAll(
+      ".tile"
+    ) as NodeListOf<HTMLDivElement>;
+    tiles.forEach((tile: HTMLDivElement) => {
+      tile.addEventListener("drop", (e: DragEvent) => {
+        e.preventDefault();
+
+        const data = e.dataTransfer?.getData("text") || "";
+        console.log(data);
+
+        tile.appendChild(document.getElementById(data)!);
+      });
+      tile.addEventListener("dragover", (e) => e.preventDefault());
+    });
   };
 }

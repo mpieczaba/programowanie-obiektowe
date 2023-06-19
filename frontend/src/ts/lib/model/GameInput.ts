@@ -1,3 +1,4 @@
+import BoardResponse from "./BoardResponse.js";
 import PlayerInput from "./PlayerInput.js";
 
 export default class GameInput {
