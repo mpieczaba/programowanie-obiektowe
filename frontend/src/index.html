@@ -21,7 +21,11 @@
   </head>
   <body>
     <main class="nes-container">
-      <section id="new-game" class="nes-container is-centered is-rounded">
+      <section
+        id="new-game"
+        class="nes-container is-centered is-rounded"
+        hidden
+      >
         <h1>Create a new game</h1>
 
         <form id="new-game-form" action="#">
@@ -52,7 +56,17 @@
         </section>
       </section>
 
-      <canvas id="canvas" hidden></canvas>
+      <section id="game" hidden>
+        <section id="board" class="nes-container is-rounded is-centered">
+          <div id="map"></div>
+        </section>
+
+        <section id="deck" class="nes-container is-rounded is-centered">
+          <p class="title">Deck</p>
+        </section>
+      </section>
+
+      <!-- <canvas id="canvas" hidden></canvas>-->
     </main>
 
     <script type="module" src="js/main.js"></script>

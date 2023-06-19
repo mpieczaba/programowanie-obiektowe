@@ -2,11 +2,12 @@ import UI from "./UI.js";
 import Client from "./lib/Client.js";
 
 export default class Controller {
-  private client = new Client();
+  private client;
   private ui: UI;
 
-  constructor(ui: UI) {
+  constructor(ui: UI, client: Client) {
     this.ui = ui;
+    this.client = client;
   }
 
   public newGameFormSubmit = (e: SubmitEvent) => {
@@ -40,5 +41,12 @@ export default class Controller {
             .catch((e: Error) => this.ui.updateBalloon(e.message));
       }
     }
+  };
+
+  public windowLoad = () => {
+    const gameId = new URLSearchParams(window.location.search).get("g");
+    if (!gameId) return;
+
+    this.client.connect(gameId);
   };
 }
