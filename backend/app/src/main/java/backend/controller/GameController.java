@@ -4,12 +4,10 @@ import io.javalin.http.Context;
 import io.javalin.http.HttpStatus;
 import io.javalin.http.NotFoundResponse;
 import io.javalin.websocket.WsConnectContext;
-import io.javalin.websocket.WsContext;
 import io.javalin.http.ForbiddenResponse;
 
 import java.util.Optional;
 
-import org.eclipse.jetty.websocket.api.CloseStatus;
 import org.eclipse.jetty.websocket.api.StatusCode;
 import org.javatuples.Pair;
 

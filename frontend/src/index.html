@@ -21,15 +21,16 @@
   </head>
   <body>
     <main class="nes-container">
-      <div id="new-game" class="nes-container is-centered is-rounded">
+      <section id="new-game" class="nes-container is-centered is-rounded">
         <h1>Create a new game</h1>
 
-        <form id="nick" action="#">
+        <form id="new-game-form" action="#">
           <div class="nes-field">
             <label for="nick-input">Your name</label>
             <input
               type="text"
               id="nick-input"
+              name="nick"
               class="nes-input"
               placeholder="CoolNick1234"
             />
@@ -39,19 +40,14 @@
             Let's go!
           </button>
         </form>
-      </div>
+      </section>
 
-      <!-- Easter egg -->
-      <section id="easter-egg" class="message-list" hidden>
+      <section id="balloon" class="message-list" hidden>
         <section class="message -left">
           <i class="nes-mario"></i>
 
           <div class="nes-balloon from-left">
-            <p>
-              Prosze podać inny nik niż Jan Paweł 2.
-              <br />
-              Ten nik może (i czyni to) obraża osoby wierzące.
-            </p>
+            <p id="balloon-text"></p>
           </div>
         </section>
       </section>
