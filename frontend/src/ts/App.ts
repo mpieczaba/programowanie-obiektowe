@@ -17,5 +17,28 @@ export default class App {
     );
 
     window.addEventListener("load", this.controller.windowLoad);
+
+    const entities = document.querySelectorAll(
+      ".entity"
+    ) as NodeListOf<HTMLDivElement>;
+    entities.forEach((entity: HTMLDivElement) => {
+      entity.addEventListener("dragstart", (e: DragEvent) => {
+        e.dataTransfer?.setData("text", entity.id);
+      });
+      entity.addEventListener("dragend", (e) => console.log(e));
+    });
+
+    const tiles = document.querySelectorAll(
+      ".tile"
+    ) as NodeListOf<HTMLDivElement>;
+    tiles.forEach((tile: HTMLDivElement) => {
+      tile.addEventListener("drop", (e: DragEvent) => {
+        e.preventDefault();
+
+        const data = e.dataTransfer?.getData("text") || "";
+        tile.appendChild(document.getElementById(data)!);
+      });
+      tile.addEventListener("dragover", (e) => e.preventDefault());
+    });
   }
 }

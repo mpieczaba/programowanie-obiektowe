@@ -16,12 +16,6 @@ export default class UI {
 
   public map = document.getElementById("map") as HTMLDivElement;
 
-  public canvas = document.getElementById("canvas") as HTMLCanvasElement;
-
-  private buffer = document
-    .createElement("canvas")
-    .getContext("2d") as CanvasRenderingContext2D;
-
   constructor() {
     const gameId = new URLSearchParams(window.location.search).get("g");
 
@@ -46,19 +40,26 @@ export default class UI {
         const tile = document.createElement("div");
         tile.classList.add("tile");
 
-        if (i == 4 && (j == 0 || j == 11)) tile.innerText = "X";
+        if (i == 4 && (j == 0 || j == 11)) {
+          const progress = document.createElement("progress");
+          progress.max = 100;
+          progress.classList.add("hp");
+          progress.classList.add("nes-progress");
+          progress.classList.add("is-error");
+
+          const castle = document.createElement("div");
+          castle.id = `castle-${i}-${j}`;
+          castle.draggable = true;
+          castle.classList.add("entity");
+          castle.appendChild(progress);
+          castle.innerHTML += `<img src="img/druidV1.png" />`;
+
+          castle.classList.add("castle");
+          tile.appendChild(castle);
+        }
 
         this.map.appendChild(tile);
       }
     }
   }
-
-  public resizeCanvas = (ctx: CanvasRenderingContext2D) => {
-    const newWidth = this.canvas.width - (this.canvas.width % 16);
-    const newHeight = this.canvas.height - (this.canvas.height % 16);
-    this.buffer.canvas.width = newWidth;
-    this.buffer.canvas.height = newHeight;
-    ctx.canvas.width = newWidth;
-    ctx.canvas.height = newHeight;
-  };
 }

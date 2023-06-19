@@ -104,11 +104,26 @@ main {
   }
 }
 
+.entity {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  place-items: center;
+
+  img {
+    image-rendering: pixelated;
+    width: 75px;
+  }
+}
+
+.hp {
+  margin-top: -30px;
+  height: 15px;
+  width: 100px;
+}
+
 #deck {
   flex: 1;
   background-color: #f2f2f2;
-}
-
-#canvas {
-  margin: -4px;
 }
