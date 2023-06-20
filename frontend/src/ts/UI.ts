@@ -58,6 +58,7 @@ export default class UI {
     u.draggable = true;
     u.classList.add("entity");
     u.classList.add("unit");
+    u.classList.add("nes-pointer");
     u.appendChild(progress);
     u.innerHTML += `<img src="img/barbarianV1.png" />`;
 

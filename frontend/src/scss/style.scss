@@ -110,6 +110,7 @@ main {
   flex-direction: column;
   gap: 0.1rem;
   place-items: center;
+  user-select: none;
 
   img {
     image-rendering: pixelated;
