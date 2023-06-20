@@ -10,9 +10,9 @@ import org.javatuples.Pair;
 
 import com.github.shamil.Xid;
 
-import backend.model.Castle;
 import backend.model.Warrior;
 import backend.model.board.Board;
+import backend.model.castle.Castle;
 import backend.model.player.Player;
 import backend.model.turn.Turn;
 
@@ -51,8 +51,8 @@ public class Game {
         // Put host's castle on the board
         try {
             // NOTE: storing position both in map and in entity feels kinda weird to me
-            this.board.placeNewCastle(new Pair<Integer, Integer>(6, 11),
-                    new Castle(host, new Pair<Integer, Integer>(6, 11)));
+            this.board.placeNewCastle(new Pair<Integer, Integer>(5, 0),
+                    new Castle(host, new Pair<Integer, Integer>(5, 0)));
 
             this.board.placeNewUnit(new Pair<Integer, Integer>(0, 0),
                     new Warrior(host, new Pair<Integer, Integer>(0, 0), null));

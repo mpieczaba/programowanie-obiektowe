@@ -1,11 +1,9 @@
+import EntityResponse from "./EntityResponse.js";
 import Position from "./Position.js";
 
-export default class UnitResponse {
-  public id: string;
+export default class UnitResponse extends EntityResponse {
   public range: number;
-  public hp: number;
   public damage: number;
-  public position: Position;
 
   constructor(
     id: string,
@@ -14,10 +12,9 @@ export default class UnitResponse {
     damage: number,
     position: Position
   ) {
-    this.id = id;
+    super(id, position, hp);
+
     this.range = range;
-    this.hp = hp;
     this.damage = damage;
-    this.position = position;
   }
 }

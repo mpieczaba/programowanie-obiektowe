@@ -5,7 +5,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import org.javatuples.Pair;
 
-import backend.model.Castle;
+import backend.model.castle.Castle;
 import backend.model.entity.Entity;
 import backend.model.unit.Unit;
 
@@ -13,7 +13,7 @@ public class Board {
     private final Pair<Integer, Integer> dimension = new Pair<Integer, Integer>(11, 11);
 
     // Castles on the board
-    private final ConcurrentHashMap<String, Castle> castles = new ConcurrentHashMap<>();
+    public final ConcurrentHashMap<String, Castle> castles = new ConcurrentHashMap<>();
 
     // Units on the board
     public final ConcurrentHashMap<String, Unit> units = new ConcurrentHashMap<>();
