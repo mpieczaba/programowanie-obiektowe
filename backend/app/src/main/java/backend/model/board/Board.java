@@ -10,7 +10,7 @@ import backend.model.entity.Entity;
 import backend.model.unit.Unit;
 
 public class Board {
-    private final Pair<Integer, Integer> dimension = new Pair<Integer, Integer>(11, 11);
+    private final Pair<Integer, Integer> dimension = new Pair<Integer, Integer>(9, 12);
 
     // Castles on the board
     public final ConcurrentHashMap<String, Castle> castles = new ConcurrentHashMap<>();
@@ -23,7 +23,7 @@ public class Board {
 
     // Place a new entity on the board
     private void placeNewEntity(Pair<Integer, Integer> position, Entity entity) throws Exception {
-        if (position.getValue0() > this.dimension.getValue0() || position.getValue1() > this.dimension.getValue1())
+        if (position.getValue0() >= this.dimension.getValue0() || position.getValue1() >= this.dimension.getValue1())
             throw new Exception("Position is outside of the board!");
 
         if (this.tiles.putIfAbsent(position, entity.id) != null)

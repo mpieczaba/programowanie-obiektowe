@@ -74,7 +74,7 @@ export default class UI {
     c.innerHTML +=
       castle.owner.id == localStorage.getItem("playerId")
         ? `<img src="img/CastleRed.png" />`
-        : `<img src="img/Castle.png"/ >`;
+        : `<img src="img/Castle.png" />`;
 
     tile.appendChild(c);
   }

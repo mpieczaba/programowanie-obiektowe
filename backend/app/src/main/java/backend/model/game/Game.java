@@ -126,6 +126,8 @@ public class Game {
             throw new Exception("Opponent is not null");
 
         this.opponent = opponent;
+        this.board.placeNewCastle(new Pair<Integer, Integer>(4, 11),
+                new Castle(opponent, new Pair<Integer, Integer>(4, 11)));
     }
 
     public void addPlayerWithContext(WsContext ctx, String id) {
