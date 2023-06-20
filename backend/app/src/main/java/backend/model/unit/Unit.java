@@ -47,6 +47,7 @@ public abstract class Unit extends Entity {
     public abstract void boostAttackSpeed();
 
     public void giveDamage() {
+    	// TODO: check range
         this.target.takeDamage(this.damage);
     }
 
