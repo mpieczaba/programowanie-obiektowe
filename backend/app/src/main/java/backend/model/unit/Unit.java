@@ -2,12 +2,25 @@ package backend.model.unit;
 
 import org.javatuples.Pair;
 
+import com.github.shamil.Xid;
+
 import backend.model.board.Board;
-import backend.model.entity.Entity;
 import backend.model.player.Player;
 
 // Unit is an abstract representation of a fighting character
-public abstract class Unit extends Entity {
+public abstract class Unit {
+	// Unique game id
+    public final String id = Xid.get().toString();
+
+    // x and y coordinates of the entity
+    public Pair<Integer, Integer> position;
+
+    // Entity health points
+    protected int hp;
+
+    // Entity owner
+    public final Player owner;
+    
     // Represents range of the character
     protected final int range;
 
@@ -20,14 +33,25 @@ public abstract class Unit extends Entity {
     // Value represented in ticks that defines time in which unit moves from one
     // tile to another
     public final int movementSpeed;
+    
+    // Take damage form the opponent
+    public void takeDamage(int damage) {
+        // TODO: Rewrite taking damage logic
+        this.hp -= damage;
+    }
+
+    // Return true when entity is alive and false when entity is annihilated
+    public boolean isAlive() {
+        return this.hp > 0;
+    }
 
     // Unit's target
     protected Unit target;
 
     public Unit(Player owner, Pair<Integer, Integer> position, int range, int damage, int attackSpeed,
             int movementSpeed, Unit target) {
-        super(owner, position);
-
+        this.position = position;
+        this.owner = owner;
         this.range = range;
         this.damage = damage;
         this.attackSpeed = attackSpeed;
