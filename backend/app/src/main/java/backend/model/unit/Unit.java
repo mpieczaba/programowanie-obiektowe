@@ -2,6 +2,7 @@ package backend.model.unit;
 
 import org.javatuples.Pair;
 
+import backend.model.board.Board;
 import backend.model.entity.Entity;
 import backend.model.player.Player;
 
@@ -14,11 +15,11 @@ public abstract class Unit extends Entity {
     public int damage;
 
     // Ticks between hits
-    protected final int attackSpeed;
+    public final int attackSpeed;
 
     // Value represented in ticks that defines time in which unit moves from one
     // tile to another
-    protected final int movementSpeed;
+    public final int movementSpeed;
 
     // Unit's target
     private Unit target;
@@ -33,6 +34,8 @@ public abstract class Unit extends Entity {
         this.movementSpeed = movementSpeed;
         this.target = target;
     }
+    
+    public abstract void findTarget(Board board);
 
     // Logic under boosting damage for a given unit class
     public abstract void boostDamage();
@@ -43,11 +46,11 @@ public abstract class Unit extends Entity {
     // Logic under boosting attack speed for a given unit class
     public abstract void boostAttackSpeed();
 
-    private void giveDamage() {
+    public void giveDamage() {
         this.target.takeDamage(this.damage);
     }
 
-    public void nextMove() {
+    public void move() {
 
     }
 }

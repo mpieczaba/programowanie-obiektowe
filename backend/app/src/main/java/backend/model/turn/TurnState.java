@@ -10,5 +10,5 @@ public abstract class TurnState {
         this.board = board;
     }
 
-    public abstract void run();
+    public abstract void run(int tick);
 }

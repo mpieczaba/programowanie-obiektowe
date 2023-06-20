@@ -8,7 +8,7 @@ public class Boosting extends TurnState {
         super(board);
     }
 
-    public void run() {
+    public void run(int tick) {
         // TODO: Implement boosting part of the turn
     }
 }

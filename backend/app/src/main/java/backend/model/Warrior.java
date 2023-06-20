@@ -2,6 +2,7 @@ package backend.model;
 
 import org.javatuples.Pair;
 
+import backend.model.board.Board;
 import backend.model.player.Player;
 import backend.model.unit.Unit;
 
@@ -24,5 +25,9 @@ public class Warrior extends Unit {
     @Override
     public void boostAttackSpeed() {
         // TODO: Implement boosting attack speed logic
+    }
+    
+    @Override
+    public  void findTarget(Board board) {
     }
 }

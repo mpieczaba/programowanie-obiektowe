@@ -20,13 +20,13 @@ public class Turn {
 
     public void nextTick() {
         // System.out.println(this.tick);
-
+    	
         if (this.tick == 0)
             this.state = new Boosting(board);
         if (this.tick == 500)
             this.state = new Simulation(board);
 
-        this.state.run();
+        this.state.run(tick);
 
         // TODO: Add looping through entities and updating their state, etc.
 
