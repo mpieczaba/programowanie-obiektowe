@@ -22,7 +22,7 @@ public abstract class Unit extends Entity {
     public final int movementSpeed;
 
     // Unit's target
-    private Unit target;
+    protected Unit target;
 
     public Unit(Player owner, Pair<Integer, Integer> position, int range, int damage, int attackSpeed,
             int movementSpeed, Unit target) {
