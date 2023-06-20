@@ -104,7 +104,7 @@ main {
   }
 }
 
-.unit {
+.entity {
   position: absolute;
   display: flex;
   flex-direction: column;
@@ -114,6 +114,12 @@ main {
   img {
     image-rendering: pixelated;
     width: 75px;
+  }
+}
+
+.castle {
+  img {
+    width: 95px;
   }
 }
 

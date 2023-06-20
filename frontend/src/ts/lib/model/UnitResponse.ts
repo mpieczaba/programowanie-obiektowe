@@ -1,4 +1,5 @@
 import EntityResponse from "./EntityResponse.js";
+import PlayerResponse from "./PlayerResponse.js";
 import Position from "./Position.js";
 
 export default class UnitResponse extends EntityResponse {
@@ -10,9 +11,10 @@ export default class UnitResponse extends EntityResponse {
     range: number,
     hp: number,
     damage: number,
-    position: Position
+    position: Position,
+    owner: PlayerResponse
   ) {
-    super(id, position, hp);
+    super(id, position, hp, owner);
 
     this.range = range;
     this.damage = damage;

@@ -36,6 +36,8 @@ export default class Controller {
               );
               urlSearchParams.append("g", res.id);
 
+              window.localStorage.setItem("playerId", res.host.id);
+
               window.location.search = urlSearchParams.toString();
             })
             .catch((e: Error) => this.ui.updateBalloon(e.message));
@@ -52,6 +54,10 @@ export default class Controller {
     this.client
       .getGame(gameId)
       .then((res) => {
+        res.board.castles.forEach((castle) => {
+          this.ui.drawCastle(castle);
+        });
+
         res.board.units.forEach((unit) => {
           this.ui.drawUnit(unit);
           // this.handleUnitDragAndDrop();
