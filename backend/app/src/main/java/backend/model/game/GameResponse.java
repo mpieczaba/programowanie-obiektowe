@@ -1,8 +1,5 @@
 package backend.model.game;
 
-import java.util.ArrayList;
-import java.util.stream.Collectors;
-
 import backend.model.board.BoardResponse;
 import backend.model.player.PlayerResponse;
 
@@ -12,10 +9,9 @@ public class GameResponse {
     public final String id;
 
     // Game host
-    public final PlayerResponse host;
+    public PlayerResponse host;
 
-    // Players
-    public final ArrayList<PlayerResponse> players;
+    public PlayerResponse opponent;
 
     // Board
     public final BoardResponse board;
@@ -23,8 +19,8 @@ public class GameResponse {
     public GameResponse(Game game) {
         this.id = game.id;
         this.host = new PlayerResponse(game.host);
-        this.players = game.players.stream().map(p -> new PlayerResponse(p))
-                .collect(Collectors.toCollection(ArrayList::new));
+        if (game.opponent != null)
+            this.opponent = new PlayerResponse(game.opponent);
         this.board = new BoardResponse(game.board);
     }
 }

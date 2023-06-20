@@ -1,5 +1,6 @@
 package backend.controller;
 
+import io.javalin.http.BadRequestResponse;
 import io.javalin.http.Context;
 import io.javalin.http.HttpStatus;
 import io.javalin.http.NotFoundResponse;
@@ -55,9 +56,13 @@ public class GameController extends Controller {
         Optional<Game> game = this.repository.games.getById(id);
 
         game.ifPresentOrElse(g -> {
-            g.addPlayer(new Player(input.nickname));
+            try {
+                g.addOpponent(new Player(input.nickname));
 
-            ctx.json(new GameResponse(g)).status(HttpStatus.CREATED);
+                ctx.json(new GameResponse(g)).status(HttpStatus.CREATED);
+            } catch (Exception e) {
+                throw new BadRequestResponse("Opponent is already set!");
+            }
         }, () -> {
             throw new NotFoundResponse("Game not found");
         });

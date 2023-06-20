@@ -26,11 +26,11 @@ public class Game {
     // Game host
     protected final Player host;
 
+    // Game opponent
+    protected Player opponent;
+
     // Player contexts
     public final Map<WsContext, String> playerContexts = new ConcurrentHashMap<>();
-
-    // Players
-    protected final ArrayList<Player> players = new ArrayList<Player>();
 
     // Game board
     public final Board board = new Board();
@@ -45,9 +45,8 @@ public class Game {
     private static final int TPS = 30;
 
     public Game(Player host) {
-        // Set player as a host and add it to the players list
+        // Set player as a host
         this.host = host;
-        this.players.add(host);
 
         // Put host's castle on the board
         try {
@@ -121,9 +120,12 @@ public class Game {
         }
     }
 
-    // Adds player to the game
-    public void addPlayer(Player player) {
-        this.players.add(player);
+    // Adds opponent player to the game
+    public void addOpponent(Player opponent) throws Exception {
+        if (this.opponent != null)
+            throw new Exception("Opponent is not null");
+
+        this.opponent = opponent;
     }
 
     public void addPlayerWithContext(WsContext ctx, String id) {

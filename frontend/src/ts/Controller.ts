@@ -54,12 +54,13 @@ export default class Controller {
       .then((res) => {
         res.board.units.forEach((unit) => {
           this.ui.drawUnit(unit);
-          this.handleUnitDragAndDrop();
+          // this.handleUnitDragAndDrop();
         });
       })
       .catch((e) => console.log(e));
   };
 
+  /*
   public handleUnitDragAndDrop = () => {
     const units = document.querySelectorAll(
       ".unit"
@@ -86,5 +87,5 @@ export default class Controller {
       });
       tile.addEventListener("dragover", (e) => e.preventDefault());
     });
-  };
+  };*/
 }
