@@ -2,6 +2,7 @@ import UI from "../UI.js";
 import BoardResponse from "./model/BoardResponse.js";
 import GameInput from "./model/GameInput.js";
 import GameResponse from "./model/GameResponse.js";
+import PlayerInput from "./model/PlayerInput.js";
 import ResponseError from "./model/ResponseError.js";
 import UnitInput from "./model/UnitInput.js";
 import UnitResponse from "./model/UnitResponse.js";
@@ -68,6 +69,26 @@ export default class Client {
 
     const data: ResponseError = await res.json();
     throw new Error(data.REQUEST_BODY[0].message);
+  };
+
+  public joinGame = async (
+    id: string,
+    player: PlayerInput
+  ): Promise<GameResponse> => {
+    const res = await fetch(`http://localhost:8080/games/${id}/join`, {
+      method: "POST",
+      body: JSON.stringify(player),
+      headers: {
+        Accept: "application/json",
+      },
+    });
+
+    if (res.status == 201) {
+      return res.json();
+    }
+
+    const data: { title: string } = await res.json();
+    throw new Error(data.title);
   };
 
   public placeUnitOnTheMap = async (

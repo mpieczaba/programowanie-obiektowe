@@ -1,6 +1,7 @@
 import UI from "./UI.js";
 import Client from "./lib/Client.js";
 import GameInput from "./lib/model/GameInput.js";
+import PlayerInput from "./lib/model/PlayerInput.js";
 import Position from "./lib/model/Position.js";
 import UnitInput from "./lib/model/UnitInput.js";
 import { UnitType } from "./lib/model/UnitResponse.js";
@@ -18,34 +19,46 @@ export default class Controller {
     e.preventDefault();
 
     const data = new FormData(this.ui.newGameForm);
-    if (data.has("nick")) {
-      const nick = data.get("nick")?.toString();
 
-      if (!nick) return;
+    if (data.has("nick") && data.get("nick")!.toString() == "") return;
 
-      switch (nick.toLowerCase()) {
-        case "jan paweł 2":
-        case "jan paweł ii":
-          this.ui.updateBalloon(
-            "Prosze podać inny nik niż Jan Paweł 2.\nTen nik może (i czyni to) obraża osoby wierzące."
-          );
-          break;
+    const nick = data.get("nick")!.toString();
 
-        default:
-          this.client
-            .createNewGame(new GameInput(nick))
-            .then((res) => {
-              const urlSearchParams = new URLSearchParams(
-                document.location.search
-              );
-              urlSearchParams.append("g", res.id);
+    switch (nick.toLowerCase()) {
+      case "jan paweł 2":
+      case "jan paweł ii":
+        this.ui.updateBalloon(
+          "Prosze podać inny nik niż Jan Paweł 2.\nTen nik może (i czyni to) obraża osoby wierzące."
+        );
+        break;
+    }
 
-              window.localStorage.setItem("playerId", res.host.id);
+    const urlSearchParams = new URLSearchParams(document.location.search);
 
-              window.location.search = urlSearchParams.toString();
-            })
-            .catch((e: Error) => this.ui.updateBalloon(e.message));
-      }
+    if (data.has("game-id") && data.get("game-id")!.toString() != "") {
+      const gameId = data.get("game-id")!.toString();
+
+      this.client
+        .joinGame(gameId, new PlayerInput(nick))
+        .then((res) => {
+          urlSearchParams.append("g", res.id);
+          window.localStorage.setItem("playerId", res.host.id);
+          window.location.search = urlSearchParams.toString();
+          return;
+        })
+        .catch((e: Error) => {
+          this.ui.updateBalloon(e.message);
+          return;
+        });
+    } else {
+      this.client
+        .createNewGame(new GameInput(nick))
+        .then((res) => {
+          urlSearchParams.append("g", res.id);
+          window.localStorage.setItem("playerId", res.host.id);
+          window.location.search = urlSearchParams.toString();
+        })
+        .catch((e: Error) => this.ui.updateBalloon(e.message));
     }
   };
 
