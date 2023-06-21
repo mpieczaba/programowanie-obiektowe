@@ -78,7 +78,23 @@ public abstract class Unit {
         this.target.takeDamage(this.damage);
     }
 
+    
     public void move() {
-
+    	System.out.println("chuj dupa japa pipa");
+    	int cur0 = position.getValue0(), cur1 = position.getValue1();
+    	int tar0 = target.position.getValue0(), tar1 = target.position.getValue1();
+    	
+    	// move in whatever manner that brings you closer to target (horiz/vert/diag)
+    	if(cur0 > tar0) ++cur0;
+    	if(cur0 < tar0) --cur0;
+    	if(cur1 > tar1) ++cur1;
+    	if(cur1 < tar1) --cur1;
+    	
+    	if(cur0 == tar0 && cur1 == tar0) {
+    		// moving would "step onto target". Do nothing
+    	} else {
+    		// zaktualizuj fielda pos i przenieś w hashmapie.
+    	}
     }
 }
+//position = position.setValue0(cur0).setValue1(cur1);
