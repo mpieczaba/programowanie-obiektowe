@@ -13,6 +13,11 @@ export default class App {
   public handleEvents() {
     window.addEventListener("load", this.controller.windowLoad);
 
+    this.ui.playButton.addEventListener("click", () => {
+      console.log("play");
+      this.controller.handlePlay();
+    });
+
     this.ui.newGameForm.addEventListener(
       "submit",
       this.controller.newGameFormSubmit

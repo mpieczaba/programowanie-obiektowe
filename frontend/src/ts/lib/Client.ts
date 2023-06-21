@@ -27,19 +27,54 @@ export default class Client {
       const res: WsResponse<any> = JSON.parse(e.data);
       console.log(res.event);
 
+      let tick = 0;
+
       switch (res.event) {
         case "user_joined":
           this.ui.drawUnit(res.data);
+          break;
+
+        case "game_started":
+          setInterval(() => {
+            this.ui.turnCounter.innerText = (16 - (tick % 16)).toString();
+            tick++;
+          }, 1000);
           break;
 
         case "unit_placed":
           this.ui.drawUnit(res.data);
           break;
 
+        case "boosting":
+          break;
+
+        case "simulation":
+          break;
+
+        case "session_tick":
+          (res.data as BoardResponse).units.forEach((u) => this.ui.drawUnit(u));
+          break;
+
         default:
           break;
       }
     };
+  };
+
+  public startGame = async (id: string): Promise<boolean> => {
+    const res = await fetch(`http://localhost:8080/games/${id}/start`, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+      },
+    });
+
+    if (res.status == 200) {
+      return true;
+    }
+
+    const data: { title: string } = await res.json();
+    throw new Error(data.title);
   };
 
   public createNewGame = async (game: GameInput): Promise<GameResponse> => {

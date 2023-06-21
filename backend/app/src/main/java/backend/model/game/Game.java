@@ -10,6 +10,7 @@ import org.javatuples.Pair;
 import com.github.shamil.Xid;
 
 import backend.model.Warrior;
+import backend.model.WsResponse;
 import backend.model.board.Board;
 import backend.model.castle.Castle;
 import backend.model.player.Player;
@@ -51,11 +52,11 @@ public class Game {
         try {
             this.board.placeNewUnit(new Castle(host, new Pair<Integer, Integer>(4, 0)));
 
-            //this.board.getUnitByPosition(new Pair<Integer, Integer>(4, 0)).get().move();
-            
+            // this.board.getUnitByPosition(new Pair<Integer, Integer>(4, 0)).get().move();
+
             this.board.placeNewUnit(new Warrior(host, new Pair<Integer, Integer>(0, 0), null));
-            
-            //this.board.getUnitByPosition(new Pair<Integer, Integer>(0, 0)).get().move();
+
+            // this.board.getUnitByPosition(new Pair<Integer, Integer>(0, 0)).get().move();
         } catch (Exception e) {
             System.out.println("Something went terribly wrong when putting host's castle on the board:");
             System.out.println(e);
@@ -81,7 +82,7 @@ public class Game {
                     break;
 
                 default:
-                    this.game.currentTurn.nextTick();
+                    this.game.currentTurn.nextTick(this.game.playerContexts);
             }
         }
     }
@@ -99,7 +100,10 @@ public class Game {
             case INITIATED:
             case PAUSED:
                 this.state = GameState.RUNNING;
-
+                this.playerContexts.keySet().forEach(c -> {
+                    if (c.session.isOpen())
+                        c.send(new WsResponse<Object>("game_started", null));
+                });
                 // Start game loop
                 this.loop();
                 break;
@@ -114,6 +118,10 @@ public class Game {
         switch (this.state) {
             case RUNNING:
                 this.state = GameState.PAUSED;
+                this.playerContexts.keySet().forEach(c -> {
+                    if (c.session.isOpen())
+                        c.send(new WsResponse<Object>("game_paused", null));
+                });
                 break;
 
             default:

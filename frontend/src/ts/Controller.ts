@@ -63,6 +63,14 @@ export default class Controller {
     }
   };
 
+  public handlePlay = () => {
+    this.client.startGame(this.ui.gameId!).catch((e) => console.log(e));
+
+    this.ui.playButtonIcon.classList.remove("play");
+    this.ui.playButtonIcon.classList.add("pause");
+    this.ui.playButtonText.innerText = "Stop";
+  };
+
   public windowLoad = () => {
     if (!this.ui.gameId) return;
 

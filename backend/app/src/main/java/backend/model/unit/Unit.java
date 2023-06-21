@@ -62,6 +62,7 @@ public abstract class Unit {
         this.movementSpeed = movementSpeed;
         this.target = target;
         this.type = type;
+        this.hp = 100;
     }
 
     // Logic under boosting damage for a given unit class
@@ -74,12 +75,14 @@ public abstract class Unit {
     public abstract void boostAttackSpeed();
 
     public void giveDamage() {
-        // TODO: check range
-        this.target.takeDamage(this.damage);
+        if (Math.abs(this.position.getValue0() - this.target.position.getValue0()) <= this.range
+                || Math.abs(this.position.getValue1() - this.target.position.getValue1()) <= this.range)
+            this.target.takeDamage(this.damage);
     }
 
     // simple targeting scheme used by most units.
-    // units that move differently (like castle that doesn't move at all) should override it
+    // units that move differently (like castle that doesn't move at all) should
+    // override it
     public void findTarget(Board board) {
         int minDist = Integer.MAX_VALUE;
         // TODO: cycle through castles
@@ -92,28 +95,35 @@ public abstract class Unit {
             int dist = Math.max(xdist, ydist);// https://en.wikipedia.org/wiki/Chebyshev_distance
             if (dist < minDist) {
                 minDist = dist;
-                target = unit;
+                this.target = unit;
             }
         }
     }
+
     // simple moving scheme used by most units
-    // units that move differently (like castle that doesn't move at all) should override it
+    // units that move differently (like castle that doesn't move at all) should
+    // override it
     public void move() {
-    	System.out.println("chuj dupa japa pipa");
-    	if(target == null) return;
-    	int cur0 = position.getValue0(), cur1 = position.getValue1();
-    	int tar0 = target.position.getValue0(), tar1 = target.position.getValue1();
-    	
-    	// move in whatever manner that brings you closer to target (horiz/vert/diag)
-    	if(cur0 > tar0) ++cur0;
-    	if(cur0 < tar0) --cur0;
-    	if(cur1 > tar1) ++cur1;
-    	if(cur1 < tar1) --cur1;
-    	
-    	if(cur0 == tar0 && cur1 == tar0) {
-    		// moving would "step onto target". Do nothing
-    	} else {
-    		position = position.setAt0(cur0).setAt1(cur1);
-    	}
+        // System.out.println("chuj dupa japa pipa");
+        if (this.target == null)
+            return;
+        int cur0 = this.position.getValue0(), cur1 = this.position.getValue1();
+        int tar0 = this.target.position.getValue0(), tar1 = this.target.position.getValue1();
+
+        // move in whatever manner that brings you closer to target (horiz/vert/diag)
+        if (tar0 > cur0)
+            ++cur0;
+        if (tar0 < cur0)
+            --cur0;
+        if (tar1 > cur1)
+            ++cur1;
+        if (tar1 < cur1)
+            --cur1;
+
+        if (cur0 == tar0 && cur1 == tar0) {
+            // moving would "step onto target". Do nothing
+        } else {
+            this.position = new Pair<Integer, Integer>(cur0, cur1);
+        }
     }
 }

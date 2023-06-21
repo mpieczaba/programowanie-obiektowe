@@ -21,6 +21,18 @@ export default class UI {
 
   public map = document.getElementById("map") as HTMLDivElement;
 
+  public playButton = document.getElementById("play-button") as HTMLDivElement;
+  public playButtonText = document.getElementById(
+    "play-button-text"
+  ) as HTMLDivElement;
+  public playButtonIcon = document.getElementById(
+    "play-button-icon"
+  ) as HTMLDivElement;
+
+  public turnCounter = document.getElementById(
+    "turn-counter"
+  ) as HTMLDivElement;
+
   public getTiles = (): NodeListOf<HTMLDivElement> => {
     return document.querySelectorAll(".tile") as NodeListOf<HTMLDivElement>;
   };
@@ -58,6 +70,9 @@ export default class UI {
   public drawUnit(unit: UnitResponse) {
     const tile = this.getTileByPosition(unit.position);
 
+    const prev = document.getElementById(unit.id) as HTMLDivElement;
+    if (prev) prev.parentNode?.removeChild(prev);
+
     switch (unit.type) {
       case UnitType.CASTLE:
         const c = document.createElement("div");
@@ -76,6 +91,7 @@ export default class UI {
       default:
         const progress = document.createElement("progress");
         progress.max = 100;
+        progress.value = unit.hp;
         progress.classList.add("hp");
         progress.classList.add("nes-progress");
         progress.classList.add(
@@ -98,6 +114,8 @@ export default class UI {
 
         u.appendChild(progress);
         u.innerHTML += `<img src="img/WarriorV1.png" />`;
+
+        console.log(unit.position);
 
         tile.appendChild(u);
 
