@@ -15,7 +15,9 @@ import org.eclipse.jetty.websocket.api.StatusCode;
 import org.javatuples.Pair;
 
 import backend.model.Warrior;
+import backend.model.WsResponse;
 import backend.model.board.BoardResponse;
+import backend.model.castle.Castle;
 import backend.model.game.Game;
 import backend.model.game.GameInput;
 import backend.model.game.GameResponse;
@@ -24,6 +26,7 @@ import backend.model.player.PlayerInput;
 import backend.model.response.ResponseError;
 import backend.model.unit.Unit;
 import backend.model.unit.UnitInput;
+import backend.model.unit.UnitResponse;
 import backend.model.unit.UnitType;
 import backend.repository.Repository;
 
@@ -64,7 +67,11 @@ public class GameController extends Controller {
 
         game.ifPresentOrElse(g -> {
             try {
-                g.addOpponent(new Player(input.nickname));
+                Castle opponentCastle = g.addOpponent(new Player(input.nickname));
+                g.playerContexts.keySet().forEach(c -> {
+                    if (c.session.isOpen())
+                        c.send(new WsResponse<UnitResponse>("user_joined", new UnitResponse(opponentCastle)));
+                });
 
                 ctx.json(new GameResponse(g)).status(HttpStatus.CREATED);
             } catch (Exception e) {
@@ -176,7 +183,7 @@ public class GameController extends Controller {
             g.addPlayerWithContext(ctx, id);
 
             g.playerContexts.keySet().stream().filter(c -> c.session.isOpen()).forEach(session -> {
-                session.send("{\"message\": \"user joined the game\"}");
+                session.send(new WsResponse<Object>("user_made_conn", null));
             });
         }, () -> {
             ctx.send(new ResponseError("Game not found"));

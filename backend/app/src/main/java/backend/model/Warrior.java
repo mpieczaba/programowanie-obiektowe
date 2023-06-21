@@ -1,10 +1,7 @@
 package backend.model;
 
-import java.util.Map.Entry;
-
 import org.javatuples.Pair;
 
-import backend.model.board.Board;
 import backend.model.player.Player;
 import backend.model.unit.Unit;
 import backend.model.unit.UnitType;

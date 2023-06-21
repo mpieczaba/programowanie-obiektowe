@@ -1,11 +1,19 @@
+import UI from "../UI.js";
 import BoardResponse from "./model/BoardResponse.js";
 import GameInput from "./model/GameInput.js";
 import GameResponse from "./model/GameResponse.js";
 import ResponseError from "./model/ResponseError.js";
 import UnitInput from "./model/UnitInput.js";
+import UnitResponse from "./model/UnitResponse.js";
+import WsResponse from "./model/WsResponse.js";
 
 export default class Client {
+  private ui: UI;
   private ws?: WebSocket;
+
+  constructor(ui: UI) {
+    this.ui = ui;
+  }
 
   public connect = (gameId: string | null) => {
     this.ws = new WebSocket(`ws://localhost:8080/games/${gameId}`);
@@ -15,7 +23,18 @@ export default class Client {
     };
 
     this.ws.onmessage = (e) => {
-      console.log(e.data);
+      const res: WsResponse<any> = JSON.parse(e.data);
+      console.log(res.event);
+
+      switch (res.event) {
+        case "user_joined":
+          const data: UnitResponse = res.data;
+          this.ui.drawUnit(data);
+          break;
+
+        default:
+          break;
+      }
     };
   };
 

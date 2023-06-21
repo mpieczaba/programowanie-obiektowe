@@ -6,7 +6,7 @@ import Client from "./lib/Client.js";
 export default class App {
   private ui = new UI();
 
-  private client = new Client();
+  private client = new Client(this.ui);
 
   private controller = new Controller(this.ui, this.client);
 

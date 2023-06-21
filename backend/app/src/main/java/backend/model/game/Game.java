@@ -1,6 +1,5 @@
 package backend.model.game;
 
-import java.util.ArrayList;
 import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -54,15 +53,10 @@ public class Game {
             this.board.placeNewUnit(new Pair<Integer, Integer>(4, 0),
                     new Castle(host, new Pair<Integer, Integer>(4, 0)));
 
-            //this.board.getUnitByPosition(new Pair<Integer, Integer>(4, 0)).get().move();
-            
             this.board.placeNewUnit(new Pair<Integer, Integer>(0, 0),
                     new Warrior(host, new Pair<Integer, Integer>(0, 0), null));
-            
-            //this.board.getUnitByPosition(new Pair<Integer, Integer>(0, 0)).get().move();
         } catch (Exception e) {
-            System.out.println("Something went terribly wrong when putting host's castle on the board:");
-            System.out.println(e);
+            System.out.println("Something went terribly wrong when putting host's castle on the board!");
             System.exit(-1);
         }
     }
@@ -126,13 +120,17 @@ public class Game {
     }
 
     // Adds opponent player to the game
-    public void addOpponent(Player opponent) throws Exception {
+    public Castle addOpponent(Player opponent) throws Exception {
         if (this.opponent != null)
             throw new Exception("Opponent is not null");
 
         this.opponent = opponent;
-        this.board.placeNewUnit(new Pair<Integer, Integer>(4, 11),
-                new Castle(opponent, new Pair<Integer, Integer>(4, 11)));
+
+        Castle opponentCastle = new Castle(opponent, new Pair<Integer, Integer>(4, 11));
+
+        this.board.placeNewUnit(new Pair<Integer, Integer>(4, 11), opponentCastle);
+
+        return opponentCastle;
     }
 
     public void addPlayerWithContext(WsContext ctx, String id) {
