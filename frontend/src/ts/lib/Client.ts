@@ -29,8 +29,11 @@ export default class Client {
 
       switch (res.event) {
         case "user_joined":
-          const data: UnitResponse = res.data;
-          this.ui.drawUnit(data);
+          this.ui.drawUnit(res.data);
+          break;
+
+        case "unit_placed":
+          this.ui.drawUnit(res.data);
           break;
 
         default:
@@ -94,7 +97,7 @@ export default class Client {
   public placeUnitOnTheMap = async (
     id: string,
     unit: UnitInput
-  ): Promise<BoardResponse> => {
+  ): Promise<boolean> => {
     const res = await fetch(`http://localhost:8080/games/${id}/units/place`, {
       method: "POST",
       body: JSON.stringify(unit),
@@ -104,7 +107,7 @@ export default class Client {
     });
 
     if (res.status == 201) {
-      return res.json();
+      return true;
     }
 
     const data: { title: string } = await res.json();

@@ -104,7 +104,7 @@ export default class Controller {
         )
       )
       .then((res) => {
-        res.units.forEach((u) => this.ui.drawUnit(u));
+        if (!res) return;
 
         counter.innerText = `x${count - 1}`;
         if (count - 1 == 0) {

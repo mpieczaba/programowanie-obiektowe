@@ -135,22 +135,20 @@ public class GameController extends Controller {
                     .filter(u -> (u.owner.id.equals(opponent.id)) && (u.type.equals(UnitType.CASTLE)))
                     .collect(Collectors.toCollection(ArrayList::new)).get(0);
 
-            Unit unit = null;
-
-            switch (input.type) {
-                case WARRIOR:
-                    unit = new Warrior(owner, new Pair<>(input.position.x, input.position.y),
-                            target);
-                    break;
-
-                default:
-                    break;
-            }
+            Unit unit = switch (input.type) {
+                case WARRIOR -> new Warrior(owner, new Pair<>(input.position.x, input.position.y), target);
+                default -> null;
+            };
 
             try {
                 g.board.placeNewUnit(unit);
 
-                ctx.json(new BoardResponse(g.board)).status(HttpStatus.CREATED);
+                g.playerContexts.keySet().forEach(c -> {
+                    if (c.session.isOpen())
+                        c.send(new WsResponse<UnitResponse>("unit_placed", new UnitResponse(unit)));
+                });
+
+                ctx.status(HttpStatus.CREATED);
             } catch (Exception e) {
                 throw new BadRequestResponse("Cannot place new unit on the map");
             }
