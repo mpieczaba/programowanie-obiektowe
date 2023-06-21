@@ -50,7 +50,7 @@ public abstract class Unit {
     }
 
     // Unit's target
-    protected Unit target;
+    public Unit target;
 
     public Unit(Player owner, Pair<Integer, Integer> position, int range, int damage, int attackSpeed,
             int movementSpeed, Unit target, UnitType type) {

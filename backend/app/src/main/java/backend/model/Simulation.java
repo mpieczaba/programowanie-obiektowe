@@ -21,6 +21,8 @@ public class Simulation extends TurnState {
             if(tick % unit.movementSpeed == 0) {
             	unit.move();
             }
+            
+            if(!unit.target.isAlive()) board.units.remove(unit.target.id);
         }
     }
 }
