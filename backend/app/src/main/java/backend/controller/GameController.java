@@ -7,17 +7,24 @@ import io.javalin.http.NotFoundResponse;
 import io.javalin.websocket.WsConnectContext;
 import io.javalin.http.ForbiddenResponse;
 
+import java.util.ArrayList;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.eclipse.jetty.websocket.api.StatusCode;
 import org.javatuples.Pair;
 
+import backend.model.Warrior;
+import backend.model.board.BoardResponse;
 import backend.model.game.Game;
 import backend.model.game.GameInput;
 import backend.model.game.GameResponse;
 import backend.model.player.Player;
 import backend.model.player.PlayerInput;
 import backend.model.response.ResponseError;
+import backend.model.unit.Unit;
+import backend.model.unit.UnitInput;
+import backend.model.unit.UnitType;
 import backend.repository.Repository;
 
 // GameController handles and processes requests from /games endpoints 
@@ -98,6 +105,53 @@ public class GameController extends Controller {
         });
     }
 
+    public void placeUnitOnTheMap(Context ctx, String id) {
+        Optional<Game> game = this.repository.games.getById(id);
+
+        game.ifPresentOrElse(g -> {
+            if (g.opponent == null)
+                throw new BadRequestResponse("Wait for the opponent to join the game!");
+
+            UnitInput input = ctx.bodyValidator(UnitInput.class)
+                    .check(u -> (u.ownerId.equals(g.host.id) || (u.ownerId.equals(g.opponent.id))),
+                            "Invalid owner id!")
+                    .get();
+
+            Player owner = g.host.id.equals(input.ownerId) ? g.host
+                    : g.opponent.id.equals(input.ownerId) ? g.opponent : null;
+            if (owner == null)
+                throw new BadRequestResponse("Player not found!");
+
+            Player opponent = g.host.id.equals(input.ownerId) ? g.opponent : g.host;
+
+            Unit target = g.board.units.values().stream()
+                    .filter(u -> (u.owner.id.equals(opponent.id)) && (u.type.equals(UnitType.CASTLE)))
+                    .collect(Collectors.toCollection(ArrayList::new)).get(0);
+
+            Unit unit = null;
+
+            switch (input.type) {
+                case WARRIOR:
+                    unit = new Warrior(owner, new Pair<>(input.position.x, input.position.y),
+                            target);
+                    break;
+
+                default:
+                    break;
+            }
+
+            try {
+                g.board.placeNewUnit(new Pair<>(input.position.x, input.position.y), unit);
+
+                ctx.json(new BoardResponse(g.board)).status(HttpStatus.CREATED);
+            } catch (Exception e) {
+                throw new BadRequestResponse("Cannot place new unit on the map");
+            }
+        }, () -> {
+            throw new NotFoundResponse("Game not found");
+        });
+    }
+
     public void boostUnitDamage(Context ctx, String id) {
         Optional<Game> game = this.repository.games.getById(id);
 
@@ -108,7 +162,7 @@ public class GameController extends Controller {
                             throw new NotFoundResponse("Unit not found");
                         });
             } catch (Exception e) {
-                throw new NotFoundResponse("Entity not found");
+                throw new NotFoundResponse("Unit not found");
             }
         }, () -> {
             throw new NotFoundResponse("Game not found");

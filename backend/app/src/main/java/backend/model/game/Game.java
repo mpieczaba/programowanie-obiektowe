@@ -24,10 +24,10 @@ public class Game {
     public final String id = Xid.get().toString();
 
     // Game host
-    protected final Player host;
+    public final Player host;
 
     // Game opponent
-    protected Player opponent;
+    public Player opponent;
 
     // Player contexts
     public final Map<WsContext, String> playerContexts = new ConcurrentHashMap<>();

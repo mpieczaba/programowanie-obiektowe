@@ -1,5 +1,9 @@
 import UI from "./UI.js";
 import Client from "./lib/Client.js";
+import GameInput from "./lib/model/GameInput.js";
+import Position from "./lib/model/Position.js";
+import UnitInput from "./lib/model/UnitInput.js";
+import { UnitType } from "./lib/model/UnitResponse.js";
 
 export default class Controller {
   private client;
@@ -29,7 +33,7 @@ export default class Controller {
 
         default:
           this.client
-            .createNewGame(nick)
+            .createNewGame(new GameInput(nick))
             .then((res) => {
               const urlSearchParams = new URLSearchParams(
                 document.location.search
@@ -46,13 +50,12 @@ export default class Controller {
   };
 
   public windowLoad = () => {
-    const gameId = new URLSearchParams(window.location.search).get("g");
-    if (!gameId) return;
+    if (!this.ui.gameId) return;
 
-    this.client.connect(gameId);
+    this.client.connect(this.ui.gameId);
 
     this.client
-      .getGame(gameId)
+      .getGame(this.ui.gameId)
       .then((res) => {
         res.board.units.forEach((unit) => this.ui.drawUnit(unit));
       })
@@ -65,8 +68,37 @@ export default class Controller {
   public handleTileDrop = (e: DragEvent, id: string) => {
     e.preventDefault();
 
-    const type = e.dataTransfer?.getData("text") || "";
+    const text = e.dataTransfer?.getData("text");
+    if (!text?.endsWith("-selector")) return;
 
-    console.log(`Add ${type} on ${id}`);
+    const counter = document.getElementById(
+      `${text}-counter`
+    ) as HTMLDivElement;
+    const count = parseInt(counter.innerText[1]);
+
+    if (count < 1) return;
+
+    const type: UnitType =
+      UnitType[text.split("-")[0].toUpperCase() as keyof typeof UnitType];
+
+    this.client
+      .placeUnitOnTheMap(
+        this.ui.gameId!,
+        new UnitInput(
+          new Position(parseInt(id.split("-")[1]), parseInt(id.split("-")[2])),
+          localStorage.getItem("playerId")!,
+          type
+        )
+      )
+      .then((res) => {
+        res.units.forEach((u) => this.ui.drawUnit(u));
+
+        counter.innerText = `x${count - 1}`;
+        if (count - 1 == 0) {
+          const selector = document.getElementById(text) as HTMLDivElement;
+          selector.classList.add("no-more-units");
+        }
+      })
+      .catch((e) => console.log(e));
   };
 }

@@ -2,6 +2,8 @@ import Position from "./lib/model/Position.js";
 import UnitResponse, { UnitType } from "./lib/model/UnitResponse.js";
 
 export default class UI {
+  public gameId = new URLSearchParams(window.location.search).get("g");
+
   public balloon = document.getElementById("balloon") as HTMLDivElement;
   private balloonText = document.getElementById(
     "balloon-text"
@@ -56,13 +58,11 @@ export default class UI {
   public drawUnit(unit: UnitResponse) {
     const tile = this.getTileByPosition(unit.position);
 
-    console.log(UnitType.CASTLE);
-
     switch (unit.type) {
       case UnitType.CASTLE:
         const c = document.createElement("div");
         c.id = unit.id;
-        c.classList.add("entity");
+        c.classList.add("unit");
         c.classList.add("castle");
         c.innerHTML +=
           unit.owner.id == localStorage.getItem("playerId")
@@ -82,8 +82,7 @@ export default class UI {
 
         const u = document.createElement("div");
         u.id = unit.id;
-        u.draggable = true;
-        u.classList.add("entity");
+        u.draggable = false;
         u.classList.add("unit");
         u.classList.add("nes-pointer");
         u.appendChild(progress);
@@ -101,6 +100,7 @@ export default class UI {
         const tile = document.createElement("div");
         tile.id = `tile-${x}-${y}`;
         tile.classList.add("tile");
+        tile.draggable = false;
         this.map.appendChild(tile);
       }
     }

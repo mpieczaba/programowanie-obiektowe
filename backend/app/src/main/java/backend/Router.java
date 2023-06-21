@@ -37,6 +37,9 @@ public class Router {
             post("pause", ctx -> gameController.pause(ctx, ctx.pathParam("game_id")));
 
             path("units", () -> {
+                // POST /games/:id/units/place
+                post("place", ctx -> gameController.placeUnitOnTheMap(ctx, ctx.pathParam("game_id")));
+
                 path("boost", () -> {
                     // POST /games/:id/units/boost/damage
                     post("damage", ctx -> gameController.boostUnitDamage(ctx, ctx.pathParam("game_id")));

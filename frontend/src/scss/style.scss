@@ -104,7 +104,7 @@ main {
   }
 }
 
-.entity {
+.unit {
   position: absolute;
   display: flex;
   flex-direction: column;
@@ -115,13 +115,13 @@ main {
   img {
     image-rendering: pixelated;
     width: 75px;
+    pointer-events: none;
   }
 }
 
 .castle {
   img {
     width: 95px;
-    pointer-events: none;
   }
 }
 
@@ -163,6 +163,14 @@ main {
     img {
       margin-right: 8px;
       margin-left: -8px;
+    }
+  }
+
+  &.no-more-units {
+    background-color: #585858;
+
+    img {
+      filter: grayscale(1);
     }
   }
 }
