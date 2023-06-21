@@ -10,6 +10,7 @@ public class UnitResponse {
     public PlayerResponse owner;
     public int damage;
     public int range;
+    public UnitType type;
 
     public UnitResponse(Unit unit) {
         this.id = unit.id;
@@ -18,5 +19,6 @@ public class UnitResponse {
         this.owner = new PlayerResponse(unit.owner);
         this.damage = unit.damage;
         this.range = unit.range;
+        this.type = unit.type;
     }
 }

@@ -1,6 +1,5 @@
-import CastleResponse from "./lib/model/CastleResponse.js";
 import Position from "./lib/model/Position.js";
-import UnitResponse from "./lib/model/UnitResponse.js";
+import UnitResponse, { UnitType } from "./lib/model/UnitResponse.js";
 
 export default class UI {
   public balloon = document.getElementById("balloon") as HTMLDivElement;
@@ -19,6 +18,16 @@ export default class UI {
   public board = document.getElementById("board") as HTMLDivElement;
 
   public map = document.getElementById("map") as HTMLDivElement;
+
+  public getTiles = (): NodeListOf<HTMLDivElement> => {
+    return document.querySelectorAll(".tile") as NodeListOf<HTMLDivElement>;
+  };
+
+  public getSelectors = (): NodeListOf<HTMLDivElement> => {
+    return document.querySelectorAll(
+      ".deck-selector"
+    ) as NodeListOf<HTMLDivElement>;
+  };
 
   constructor() {
     const gameId = new URLSearchParams(window.location.search).get("g");
@@ -47,37 +56,43 @@ export default class UI {
   public drawUnit(unit: UnitResponse) {
     const tile = this.getTileByPosition(unit.position);
 
-    const progress = document.createElement("progress");
-    progress.max = 100;
-    progress.classList.add("hp");
-    progress.classList.add("nes-progress");
-    progress.classList.add("is-error");
+    console.log(UnitType.CASTLE);
 
-    const u = document.createElement("div");
-    u.id = unit.id;
-    u.draggable = true;
-    u.classList.add("entity");
-    u.classList.add("unit");
-    u.classList.add("nes-pointer");
-    u.appendChild(progress);
-    u.innerHTML += `<img src="img/barbarianV1.png" />`;
+    switch (unit.type) {
+      case UnitType.CASTLE:
+        const c = document.createElement("div");
+        c.id = unit.id;
+        c.classList.add("entity");
+        c.classList.add("castle");
+        c.innerHTML +=
+          unit.owner.id == localStorage.getItem("playerId")
+            ? `<img src="img/CastleRed.png" />`
+            : `<img src="img/Castle.png" />`;
+        tile.appendChild(c);
 
-    tile.appendChild(u);
-  }
+        break;
 
-  public drawCastle(castle: CastleResponse) {
-    const tile = this.getTileByPosition(castle.position);
+      case UnitType.WARRIOR:
+      default:
+        const progress = document.createElement("progress");
+        progress.max = 100;
+        progress.classList.add("hp");
+        progress.classList.add("nes-progress");
+        progress.classList.add("is-error");
 
-    const c = document.createElement("div");
-    c.id = castle.id;
-    c.classList.add("entity");
-    c.classList.add("castle");
-    c.innerHTML +=
-      castle.owner.id == localStorage.getItem("playerId")
-        ? `<img src="img/CastleRed.png" />`
-        : `<img src="img/Castle.png" />`;
+        const u = document.createElement("div");
+        u.id = unit.id;
+        u.draggable = true;
+        u.classList.add("entity");
+        u.classList.add("unit");
+        u.classList.add("nes-pointer");
+        u.appendChild(progress);
+        u.innerHTML += `<img src="img/WarriorV1.png" />`;
 
-    tile.appendChild(c);
+        tile.appendChild(u);
+
+        break;
+    }
   }
 
   public drawMap() {

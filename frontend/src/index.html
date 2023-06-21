@@ -12,7 +12,10 @@
       href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap"
       rel="stylesheet"
     />
-
+    <link
+      href="https://unpkg.com/nes.icons@latest/css/nes-icons.min.css"
+      rel="stylesheet"
+    />
     <link
       href="https://unpkg.com/nes.css@2.3.0/css/nes.min.css"
       rel="stylesheet"
@@ -63,10 +66,95 @@
 
         <section id="deck" class="nes-container is-rounded is-centered">
           <p class="title">Deck</p>
+
+          <div id="deck-selectors">
+            <div
+              id="warrior-selector"
+              class="deck-selector nes-container is-rounded"
+              draggable
+            >
+              <img src="img/WarriorV1.png" />
+              <div class="deck-selector-counter">x5</div>
+            </div>
+
+            <div
+              id="archer-selector"
+              class="deck-selector nes-container is-rounded"
+              draggable
+            >
+              <img src="img/archer.png" />
+              <div class="deck-selector-counter">x5</div>
+            </div>
+
+            <div
+              id="barbarian-selector"
+              class="deck-selector nes-container is-rounded"
+              draggable
+            >
+              <img src="img/barbarianV1.png" />
+              <div class="deck-selector-counter">x5</div>
+            </div>
+
+            <div
+              id="druid-selector"
+              class="deck-selector nes-container is-rounded"
+              draggable
+            >
+              <img src="img/druidV1.png" />
+              <div class="deck-selector-counter">x5</div>
+            </div>
+
+            <div
+              id="wizard-selector"
+              class="deck-selector nes-container is-rounded"
+              draggable
+            >
+              <img src="img/Wizard.png" />
+              <div class="deck-selector-counter">x5</div>
+            </div>
+          </div>
+
+          <p class="title">Castle stats</p>
+
+          <div id="castle">
+            <img src="img/CastleRed.png" />
+
+            <div id="castle-hp-wrapper">
+              <progress
+                id="castle-hp-progress"
+                class="nes-progress is-error"
+                value="30"
+                max="100"
+              ></progress>
+
+              <div id="castle-hp-number">100</div>
+            </div>
+
+            <div id="castle-gold-and-death-count-wrapper">
+              <div>
+                <div>Gold:</div>
+                <div>100</div>
+              </div>
+
+              <div>
+                <div>Deaths:</div>
+                <div>100</div>
+              </div>
+            </div>
+          </div>
+
+          <div id="controls">
+            <div id="turn">Turn: 1</div>
+
+            <div id="turn-counter">997</div>
+
+            <div id="play-button">
+              <i class="nes-icon size-1x play"></i>
+              Start
+            </div>
+          </div>
         </section>
       </section>
-
-      <!-- <canvas id="canvas" hidden></canvas>-->
     </main>
 
     <script type="module" src="js/main.js"></script>

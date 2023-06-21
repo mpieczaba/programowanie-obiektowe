@@ -133,5 +133,116 @@ main {
 
 #deck {
   flex: 1;
-  background-color: #f2f2f2;
+  flex-direction: column;
+  color: #f2f2f2;
+  background-color: #8e8043;
+  padding: 1rem 0 0 0;
+}
+
+#deck-selectors {
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+  padding: 0 1.5rem 1rem 1.5rem;
+  margin: -4px;
+  border-bottom: 4px solid #212529;
+  margin-bottom: 1rem;
+}
+
+.deck-selector {
+  flex: 1;
+  padding: 0 !important;
+  background-color: #c4ab3f;
+
+  img {
+    image-rendering: pixelated;
+    width: 65px;
+  }
+
+  &:nth-child(4n) {
+    img {
+      margin-right: 8px;
+      margin-left: -8px;
+    }
+  }
+}
+
+.deck-selector-counter {
+  color: #f2f2f2;
+}
+
+#castle {
+  display: flex;
+  flex-direction: column;
+  place-content: center;
+  border-bottom: 4px solid #212529;
+  margin-bottom: 1rem;
+  padding-bottom: 1rem;
+  margin: -4px;
+
+  img {
+    display: flex;
+    place-self: center;
+    margin-top: -30px;
+    width: 256px;
+    image-rendering: pixelated;
+  }
+}
+
+#castle-hp-wrapper {
+  display: flex;
+  flex-direction: row;
+  place-items: center;
+  place-content: center;
+  margin: -1rem 1.5rem 1.5rem 1.5rem;
+}
+
+#castle-hp-progress {
+  display: flex;
+  flex: 4;
+  height: 30px;
+}
+
+#castle-hp-number {
+  display: flex;
+  flex-direction: row;
+  flex: 1;
+  place-items: center;
+  gap: 0.5rem;
+  padding-left: 0.5rem;
+  margin-right: -3rem;
+}
+
+#castle-gold-and-death-count-wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 0 5rem 0 5rem;
+}
+
+#controls {
+  display: flex;
+  flex-direction: row;
+  place-content: center;
+  padding: 1.2rem 2rem 0 2rem;
+  justify-content: space-between;
+}
+
+#turn {
+  display: flex;
+  flex-direction: row;
+  place-items: center;
+}
+
+#turn-counter {
+  display: flex;
+  flex-direction: row;
+  place-items: center;
+}
+
+#play-button {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  place-items: center;
 }

@@ -1,10 +1,19 @@
-import EntityResponse from "./EntityResponse.js";
 import PlayerResponse from "./PlayerResponse.js";
 import Position from "./Position.js";
 
-export default class UnitResponse extends EntityResponse {
+export enum UnitType {
+  CASTLE = "CASTLE",
+  WARRIOR = "WARRIOR",
+}
+
+export default class UnitResponse {
+  public id: string;
+  public position: Position;
+  public hp: number;
+  public owner: PlayerResponse;
   public range: number;
   public damage: number;
+  public type: UnitType;
 
   constructor(
     id: string,
@@ -12,11 +21,15 @@ export default class UnitResponse extends EntityResponse {
     hp: number,
     damage: number,
     position: Position,
-    owner: PlayerResponse
+    owner: PlayerResponse,
+    type: UnitType
   ) {
-    super(id, position, hp, owner);
-
+    this.id = id;
+    this.hp = hp;
+    this.position = position;
+    this.owner = owner;
     this.range = range;
     this.damage = damage;
+    this.type = type;
   }
 }

@@ -11,11 +11,26 @@ export default class App {
   private controller = new Controller(this.ui, this.client);
 
   public handleEvents() {
+    window.addEventListener("load", this.controller.windowLoad);
+
     this.ui.newGameForm.addEventListener(
       "submit",
       this.controller.newGameFormSubmit
     );
 
-    window.addEventListener("load", this.controller.windowLoad);
+    this.ui.getTiles().forEach((t) => {
+      {
+        t.addEventListener("drop", (e) =>
+          this.controller.handleTileDrop(e, t.id)
+        );
+        t.addEventListener("dragover", (e) => e.preventDefault());
+      }
+    });
+
+    this.ui.getSelectors().forEach((s) => {
+      s.addEventListener("dragstart", (e) =>
+        this.controller.handleSelectorDrag(e, s.id)
+      );
+    });
   }
 }

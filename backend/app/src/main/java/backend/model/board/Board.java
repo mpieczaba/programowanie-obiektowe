@@ -5,7 +5,6 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import org.javatuples.Pair;
 
-import backend.model.castle.Castle;
 import backend.model.unit.Unit;
 
 public class Board {
@@ -19,7 +18,7 @@ public class Board {
 
     // Place a new unit on the board
     public void placeNewUnit(Pair<Integer, Integer> position, Unit unit) throws Exception {
-    	if (position.getValue0() >= this.dimension.getValue0() || position.getValue1() >= this.dimension.getValue1())
+        if (position.getValue0() >= this.dimension.getValue0() || position.getValue1() >= this.dimension.getValue1())
             throw new Exception("Position is outside of the board!");
 
         if (this.tiles.putIfAbsent(position, unit.id) != null)
@@ -31,7 +30,7 @@ public class Board {
 
     // Get unit by position
     public Optional<Unit> getUnitByPosition(Pair<Integer, Integer> position) throws Exception {
-    	if (!this.tiles.containsKey(position))
+        if (!this.tiles.containsKey(position))
             throw new Exception("Entity is not on the board");
 
         return Optional.ofNullable(this.units.get(this.tiles.get(position)));

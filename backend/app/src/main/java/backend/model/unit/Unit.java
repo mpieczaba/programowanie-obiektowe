@@ -9,7 +9,7 @@ import backend.model.player.Player;
 
 // Unit is an abstract representation of a fighting character
 public abstract class Unit {
-	// Unique game id
+    // Unique game id
     public final String id = Xid.get().toString();
 
     // x and y coordinates of the entity
@@ -20,7 +20,7 @@ public abstract class Unit {
 
     // Entity owner
     public final Player owner;
-    
+
     // Represents range of the character
     protected final int range;
 
@@ -33,7 +33,9 @@ public abstract class Unit {
     // Value represented in ticks that defines time in which unit moves from one
     // tile to another
     public final int movementSpeed;
-    
+
+    public final UnitType type;
+
     // Take damage form the opponent
     public void takeDamage(int damage) {
         // TODO: Rewrite taking damage logic
@@ -49,7 +51,7 @@ public abstract class Unit {
     protected Unit target;
 
     public Unit(Player owner, Pair<Integer, Integer> position, int range, int damage, int attackSpeed,
-            int movementSpeed, Unit target) {
+            int movementSpeed, Unit target, UnitType type) {
         this.position = position;
         this.owner = owner;
         this.range = range;
@@ -57,8 +59,9 @@ public abstract class Unit {
         this.attackSpeed = attackSpeed;
         this.movementSpeed = movementSpeed;
         this.target = target;
+        this.type = type;
     }
-    
+
     public abstract void findTarget(Board board);
 
     // Logic under boosting damage for a given unit class
@@ -71,7 +74,7 @@ public abstract class Unit {
     public abstract void boostAttackSpeed();
 
     public void giveDamage() {
-    	// TODO: check range
+        // TODO: check range
         this.target.takeDamage(this.damage);
     }
 

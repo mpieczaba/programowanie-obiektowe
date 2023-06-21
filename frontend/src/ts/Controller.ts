@@ -54,44 +54,19 @@ export default class Controller {
     this.client
       .getGame(gameId)
       .then((res) => {
-        res.board.castles.forEach((castle) => {
-          this.ui.drawCastle(castle);
-        });
-
-        res.board.units.forEach((unit) => {
-          this.ui.drawUnit(unit);
-          // this.handleUnitDragAndDrop();
-        });
+        res.board.units.forEach((unit) => this.ui.drawUnit(unit));
       })
       .catch((e) => console.log(e));
   };
 
-  /*
-  public handleUnitDragAndDrop = () => {
-    const units = document.querySelectorAll(
-      ".unit"
-    ) as NodeListOf<HTMLDivElement>;
-    units.forEach((unit: HTMLDivElement) => {
-      unit.addEventListener("dragstart", (e: DragEvent) => {
-        console.log(unit.id);
-        e.dataTransfer?.setData("text", unit.id);
-      });
-      unit.addEventListener("dragend", (e) => console.log(e));
-    });
+  public handleSelectorDrag = (e: DragEvent, id: string) =>
+    e.dataTransfer?.setData("text", id);
 
-    const tiles = document.querySelectorAll(
-      ".tile"
-    ) as NodeListOf<HTMLDivElement>;
-    tiles.forEach((tile: HTMLDivElement) => {
-      tile.addEventListener("drop", (e: DragEvent) => {
-        e.preventDefault();
+  public handleTileDrop = (e: DragEvent, id: string) => {
+    e.preventDefault();
 
-        const data = e.dataTransfer?.getData("text") || "";
-        console.log(data);
+    const type = e.dataTransfer?.getData("text") || "";
 
-        tile.appendChild(document.getElementById(data)!);
-      });
-      tile.addEventListener("dragover", (e) => e.preventDefault());
-    });
-  };*/
+    console.log(`Add ${type} on ${id}`);
+  };
 }
