@@ -65,7 +65,7 @@ export default class UI {
         c.classList.add("unit");
         c.classList.add("castle");
         c.innerHTML +=
-          unit.owner.id == localStorage.getItem("playerId")
+          unit.owner.id == sessionStorage.getItem("playerId")
             ? `<img src="img/CastleRed.png" />`
             : `<img src="img/Castle.png" />`;
         tile.appendChild(c);
@@ -78,13 +78,24 @@ export default class UI {
         progress.max = 100;
         progress.classList.add("hp");
         progress.classList.add("nes-progress");
-        progress.classList.add("is-error");
+        progress.classList.add(
+          unit.owner.id == sessionStorage.getItem("playerId")
+            ? "is-error"
+            : "is-primary"
+        );
 
         const u = document.createElement("div");
         u.id = unit.id;
         u.draggable = false;
         u.classList.add("unit");
         u.classList.add("nes-pointer");
+
+        if (unit.owner.id != sessionStorage.getItem("playerId"))
+          u.classList.add("opponent");
+
+        if (sessionStorage.getItem("isOpponent") == "true")
+          u.classList.add("flip");
+
         u.appendChild(progress);
         u.innerHTML += `<img src="img/WarriorV1.png" />`;
 

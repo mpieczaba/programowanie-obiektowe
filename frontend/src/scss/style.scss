@@ -117,6 +117,22 @@ main {
     width: 75px;
     pointer-events: none;
   }
+
+  &.opponent {
+    img {
+      transform: scaleX(-1);
+    }
+  }
+
+  &.flip {
+    img {
+      transform: scaleX(1);
+    }
+
+    &.flip:not(.opponent) {
+      transform: scaleX(-1);
+    }
+  }
 }
 
 .castle {

@@ -42,7 +42,8 @@ export default class Controller {
         .joinGame(gameId, new PlayerInput(nick))
         .then((res) => {
           urlSearchParams.append("g", res.id);
-          window.localStorage.setItem("playerId", res.host.id);
+          window.sessionStorage.setItem("playerId", res.opponent!.id);
+          window.sessionStorage.setItem("isOpponent", "true");
           window.location.search = urlSearchParams.toString();
           return;
         })
@@ -55,7 +56,7 @@ export default class Controller {
         .createNewGame(new GameInput(nick))
         .then((res) => {
           urlSearchParams.append("g", res.id);
-          window.localStorage.setItem("playerId", res.host.id);
+          window.sessionStorage.setItem("playerId", res.host.id);
           window.location.search = urlSearchParams.toString();
         })
         .catch((e: Error) => this.ui.updateBalloon(e.message));
@@ -99,7 +100,7 @@ export default class Controller {
         this.ui.gameId!,
         new UnitInput(
           new Position(parseInt(id.split("-")[1]), parseInt(id.split("-")[2])),
-          localStorage.getItem("playerId")!,
+          sessionStorage.getItem("playerId")!,
           type
         )
       )
