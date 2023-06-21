@@ -28,4 +28,8 @@ public class Castle extends Unit {
 	@Override
 	public void boostAttackSpeed() {
 	}
+	
+	@Override
+	public void move() {
+	}
 }
