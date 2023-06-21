@@ -1,6 +1,7 @@
 package backend.model.board;
 
 import java.util.Optional;
+import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.javatuples.Pair;
@@ -13,16 +14,10 @@ public class Board {
     // unitId:unit
     public final ConcurrentHashMap<String, Unit> units = new ConcurrentHashMap<>();
 
-    // Represents entities located on a 2D plane of the board with their id
-    private final ConcurrentHashMap<Pair<Integer, Integer>, String> tiles = new ConcurrentHashMap<>();
-
     // Place a new unit on the board
     public void placeNewUnit(Pair<Integer, Integer> position, Unit unit) throws Exception {
         if (position.getValue0() >= this.dimension.getValue0() || position.getValue1() >= this.dimension.getValue1())
             throw new Exception("Position is outside of the board!");
-
-        if (this.tiles.putIfAbsent(position, unit.id) != null)
-            throw new Exception("Tile is not empty!");
 
         if (this.units.putIfAbsent(unit.id, unit) != null)
             throw new Exception("Unit already exists!");
@@ -30,9 +25,9 @@ public class Board {
 
     // Get unit by position
     public Optional<Unit> getUnitByPosition(Pair<Integer, Integer> position) throws Exception {
-        if (!this.tiles.containsKey(position))
-            throw new Exception("Entity is not on the board");
-
-        return Optional.ofNullable(this.units.get(this.tiles.get(position)));
+    	for (Entry<String, Unit> e : units.entrySet()) {
+    		if(e.getValue().position.equals(position)) return Optional.of(e.getValue()); 
+    	}
+    	return Optional.empty();
     }
 }
