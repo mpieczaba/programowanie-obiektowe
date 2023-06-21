@@ -148,7 +148,7 @@ public class GameController extends Controller {
             }
 
             try {
-                g.board.placeNewUnit(new Pair<>(input.position.x, input.position.y), unit);
+                g.board.placeNewUnit(unit);
 
                 ctx.json(new BoardResponse(g.board)).status(HttpStatus.CREATED);
             } catch (Exception e) {

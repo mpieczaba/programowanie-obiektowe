@@ -15,8 +15,8 @@ public class Board {
     public final ConcurrentHashMap<String, Unit> units = new ConcurrentHashMap<>();
 
     // Place a new unit on the board
-    public void placeNewUnit(Pair<Integer, Integer> position, Unit unit) throws Exception {
-        if (position.getValue0() >= this.dimension.getValue0() || position.getValue1() >= this.dimension.getValue1())
+    public void placeNewUnit(Unit unit) throws Exception {
+        if (unit.position.getValue0() >= this.dimension.getValue0() || unit.position.getValue1() >= this.dimension.getValue1())
             throw new Exception("Position is outside of the board!");
 
         if (this.units.putIfAbsent(unit.id, unit) != null)
