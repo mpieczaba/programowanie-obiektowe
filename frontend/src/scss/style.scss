@@ -153,6 +153,7 @@ main {
   flex: 1;
   padding: 0 !important;
   background-color: #c4ab3f;
+  user-select: none;
 
   img {
     image-rendering: pixelated;
@@ -171,6 +172,7 @@ main {
 
     img {
       filter: grayscale(1);
+      pointer-events: none;
     }
   }
 }

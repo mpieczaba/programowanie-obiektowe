@@ -23,6 +23,9 @@ export default class Client {
     const res = await fetch("http://localhost:8080/games", {
       method: "POST",
       body: JSON.stringify(game),
+      headers: {
+        Accept: "application/json",
+      },
     });
 
     if (res.status == 201) {
@@ -34,7 +37,11 @@ export default class Client {
   };
 
   public getGame = async (id: string): Promise<GameResponse> => {
-    const res = await fetch(`http://localhost:8080/games/${id}`);
+    const res = await fetch(`http://localhost:8080/games/${id}`, {
+      headers: {
+        Accept: "application/json",
+      },
+    });
 
     if (res.status == 200) {
       return res.json();
@@ -51,13 +58,16 @@ export default class Client {
     const res = await fetch(`http://localhost:8080/games/${id}/units/place`, {
       method: "POST",
       body: JSON.stringify(unit),
+      headers: {
+        Accept: "application/json",
+      },
     });
 
     if (res.status == 201) {
       return res.json();
     }
 
-    const data: ResponseError = await res.json();
-    throw new Error(data.REQUEST_BODY[0].message);
+    const data: { title: string } = await res.json();
+    throw new Error(data.title);
   };
 }
