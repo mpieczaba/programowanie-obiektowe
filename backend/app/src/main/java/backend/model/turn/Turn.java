@@ -28,8 +28,6 @@ public class Turn {
 
         this.state.run(tick);
 
-        // TODO: Add looping through entities and updating their state, etc.
-
         this.tick = ++tick % 1000;
     }
 }
