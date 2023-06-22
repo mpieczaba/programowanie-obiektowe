@@ -76,7 +76,7 @@ public abstract class Unit {
 
     public void giveDamage() {
         if (Math.abs(this.position.getValue0() - this.target.position.getValue0()) <= this.range
-                || Math.abs(this.position.getValue1() - this.target.position.getValue1()) <= this.range)
+                && Math.abs(this.position.getValue1() - this.target.position.getValue1()) <= this.range)
             this.target.takeDamage(this.damage);
     }
 
