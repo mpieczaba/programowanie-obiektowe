@@ -104,7 +104,6 @@ public abstract class Unit {
     // units that move differently (like castle that doesn't move at all) should
     // override it
     public void move() {
-        // System.out.println("chuj dupa japa pipa");
         if (this.target == null)
             return;
         int cur0 = this.position.getValue0(), cur1 = this.position.getValue1();

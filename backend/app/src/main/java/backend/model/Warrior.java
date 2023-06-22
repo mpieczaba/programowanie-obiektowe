@@ -8,7 +8,7 @@ import backend.model.unit.UnitType;
 
 public class Warrior extends Unit {
     public Warrior(Player owner, Pair<Integer, Integer> position, Unit target) {
-        super(owner, position, 1, 5, 10, 30, target, UnitType.WARRIOR);
+        super(owner, position, 1, 5, 20, 30, target, UnitType.WARRIOR);
     }
 
     @Override
