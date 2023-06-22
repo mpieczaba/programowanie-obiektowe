@@ -71,6 +71,11 @@ export default class Controller {
     this.ui.playButtonText.innerText = "Stop";
   };
 
+  public handleClose = () => {
+    this.ui.deck.hidden = false;
+    this.ui.boosting.hidden = true;
+  };
+
   public windowLoad = () => {
     if (!this.ui.gameId) return;
 

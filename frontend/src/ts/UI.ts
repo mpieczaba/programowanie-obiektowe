@@ -21,16 +21,26 @@ export default class UI {
 
   public map = document.getElementById("map") as HTMLDivElement;
 
+  public deck = document.getElementById("deck") as HTMLDivElement;
+
+  public boosting = document.getElementById("boosting") as HTMLDivElement;
+
   public playButton = document.getElementById("play-button") as HTMLDivElement;
+
   public playButtonText = document.getElementById(
     "play-button-text"
   ) as HTMLDivElement;
+
   public playButtonIcon = document.getElementById(
     "play-button-icon"
   ) as HTMLDivElement;
 
   public turnCounter = document.getElementById(
     "turn-counter"
+  ) as HTMLDivElement;
+
+  public closeButton = document.getElementById(
+    "close-button"
   ) as HTMLDivElement;
 
   public getTiles = (): NodeListOf<HTMLDivElement> => {

@@ -37,5 +37,7 @@ export default class App {
         this.controller.handleSelectorDrag(e, s.id)
       );
     });
+
+    this.ui.closeButton.addEventListener("click", this.controller.handleClose);
   }
 }
