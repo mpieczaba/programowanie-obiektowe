@@ -68,7 +68,7 @@ export default class Controller {
 
     this.ui.playButtonIcon.classList.remove("play");
     this.ui.playButtonIcon.classList.add("pause");
-    this.ui.playButtonText.innerText = "Stop";
+    this.ui.playButtonText.innerText = "Pause";
   };
 
   public handleClose = () => {
@@ -123,7 +123,8 @@ export default class Controller {
         counter.innerText = `x${count - 1}`;
         if (count - 1 == 0) {
           const selector = document.getElementById(text) as HTMLDivElement;
-          selector.classList.add("no-more-units");
+          selector.classList.add("locked");
+          selector.classList.add("empty");
         }
       })
       .catch((e) => console.log(e));

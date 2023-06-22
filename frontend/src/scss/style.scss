@@ -135,6 +135,12 @@ button {
       transform: scaleX(-1);
     }
   }
+
+  &:hover:not(.opponent, .castle) {
+    img {
+      filter: drop-shadow(0 0 1rem #f2c409);
+    }
+  }
 }
 
 .castle {
@@ -189,7 +195,7 @@ button {
     background-color: #e4c125;
   }
 
-  &.no-more-units {
+  &.locked {
     background-color: #585858;
 
     img {
@@ -276,7 +282,8 @@ button {
 #play-button {
   display: flex;
   flex-direction: row;
-  gap: 1rem;
+  width: 8rem;
+  justify-content: space-between;
   place-items: center;
   color: #d0d0d0;
 

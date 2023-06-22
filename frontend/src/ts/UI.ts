@@ -23,6 +23,10 @@ export default class UI {
 
   public deck = document.getElementById("deck") as HTMLDivElement;
 
+  public deckSelectors = document.querySelectorAll(
+    ".deck-selector"
+  ) as NodeListOf<HTMLDivElement>;
+
   public boosting = document.getElementById("boosting") as HTMLDivElement;
 
   public playButton = document.getElementById("play-button") as HTMLDivElement;
@@ -34,6 +38,8 @@ export default class UI {
   public playButtonIcon = document.getElementById(
     "play-button-icon"
   ) as HTMLDivElement;
+
+  public turn = document.getElementById("turn") as HTMLDivElement;
 
   public turnCounter = document.getElementById(
     "turn-counter"
@@ -121,6 +127,7 @@ export default class UI {
 
         if (sessionStorage.getItem("isOpponent") == "true")
           u.classList.add("flip");
+        else u.addEventListener("click", () => {});
 
         u.appendChild(progress);
         u.innerHTML += `<img src="img/WarriorV1.png" />`;

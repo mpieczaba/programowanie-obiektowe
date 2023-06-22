@@ -157,6 +157,20 @@ public class GameController extends Controller {
         });
     }
 
+    public void getUnitById(Context ctx, String id, String unitId) {
+        Optional<Game> game = this.repository.games.getById(id);
+
+        game.ifPresentOrElse(g -> {
+            Optional.ofNullable(g.board.units.get(unitId)).ifPresentOrElse(
+                    u -> ctx.status(200).json(new UnitResponse(u)),
+                    () -> {
+                        throw new NotFoundResponse("Unit not found");
+                    });
+        }, () -> {
+            throw new NotFoundResponse("Game not found");
+        });
+    }
+
     public void boostUnitDamage(Context ctx, String id) {
         Optional<Game> game = this.repository.games.getById(id);
 

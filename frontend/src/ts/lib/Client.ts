@@ -46,9 +46,17 @@ export default class Client {
           break;
 
         case "boosting":
+          this.ui.deckSelectors.forEach((s) => {
+            if (!s.classList.contains("empty")) s.classList.remove("locked");
+          });
+
+          this.ui.turn.innerText =
+            "Turn: " +
+            (parseInt(this.ui.turn.innerText.slice(-1)) + 1).toString();
           break;
 
         case "simulation":
+          this.ui.deckSelectors.forEach((s) => s.classList.add("locked"));
           break;
 
         case "session_tick":
@@ -128,6 +136,8 @@ export default class Client {
     const data: { title: string } = await res.json();
     throw new Error(data.title);
   };
+
+  public getUnit = async (id: string, unitId: string) => {};
 
   public placeUnitOnTheMap = async (
     id: string,
