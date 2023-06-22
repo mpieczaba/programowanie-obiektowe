@@ -59,6 +59,14 @@ export default class UI {
     ) as NodeListOf<HTMLDivElement>;
   };
 
+  public castleHpNumber = document.getElementById(
+    "castle-hp-number"
+  ) as HTMLDivElement;
+
+  public castleHpProgress = document.getElementById(
+    "castle-hp-progress"
+  ) as HTMLProgressElement;
+
   constructor() {
     const gameId = new URLSearchParams(window.location.search).get("g");
 
@@ -95,10 +103,15 @@ export default class UI {
         c.id = unit.id;
         c.classList.add("unit");
         c.classList.add("castle");
-        c.innerHTML +=
-          unit.owner.id == sessionStorage.getItem("playerId")
-            ? `<img src="img/CastleRed.png" />`
-            : `<img src="img/Castle.png" />`;
+
+        if (unit.owner.id == sessionStorage.getItem("playerId")) {
+          c.innerHTML = `<img src="img/CastleRed.png" />`;
+          this.castleHpNumber.innerText = unit.hp.toString();
+          this.castleHpProgress.value = unit.hp;
+        } else {
+          c.innerHTML = `<img src="img/Castle.png" />`;
+        }
+
         tile.appendChild(c);
 
         break;

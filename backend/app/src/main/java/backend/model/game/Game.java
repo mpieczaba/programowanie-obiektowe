@@ -51,12 +51,6 @@ public class Game {
         // Put host's castle on the board
         try {
             this.board.placeNewUnit(new Castle(host, new Pair<Integer, Integer>(4, 0)));
-
-            // this.board.getUnitByPosition(new Pair<Integer, Integer>(4, 0)).get().move();
-
-            this.board.placeNewUnit(new Warrior(host, new Pair<Integer, Integer>(0, 0), null));
-
-            // this.board.getUnitByPosition(new Pair<Integer, Integer>(0, 0)).get().move();
         } catch (Exception e) {
             System.out.println("Something went terribly wrong when putting host's castle on the board:");
             System.out.println(e);
