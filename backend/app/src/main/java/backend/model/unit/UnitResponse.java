@@ -1,6 +1,6 @@
 package backend.model.unit;
 
-import backend.model.PairResponse;
+import backend.model.pair.PairResponse;
 import backend.model.player.PlayerResponse;
 
 public class UnitResponse {

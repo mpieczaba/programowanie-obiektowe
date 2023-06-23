@@ -1,4 +1,4 @@
-package backend.model.castle;
+package backend.model;
 
 import org.javatuples.Pair;
 
@@ -28,7 +28,7 @@ public class Castle extends Unit {
 	@Override
 	public void boostAttackSpeed() {
 	}
-	
+
 	@Override
 	public void move() {
 	}

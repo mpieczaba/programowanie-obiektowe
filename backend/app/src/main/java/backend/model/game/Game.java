@@ -9,10 +9,10 @@ import org.javatuples.Pair;
 
 import com.github.shamil.Xid;
 
+import backend.model.Castle;
 import backend.model.Warrior;
 import backend.model.WsResponse;
 import backend.model.board.Board;
-import backend.model.castle.Castle;
 import backend.model.player.Player;
 import backend.model.turn.Turn;
 

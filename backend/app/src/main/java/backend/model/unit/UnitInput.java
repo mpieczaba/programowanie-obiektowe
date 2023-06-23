@@ -1,6 +1,6 @@
 package backend.model.unit;
 
-import backend.model.PairInput;
+import backend.model.pair.PairInput;
 
 public class UnitInput {
     public PairInput position;

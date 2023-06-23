@@ -1,4 +1,4 @@
-package backend.model;
+package backend.model.pair;
 
 public class PairInput {
     public Integer x;

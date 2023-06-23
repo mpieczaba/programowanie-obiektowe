@@ -14,10 +14,9 @@ import java.util.stream.Collectors;
 import org.eclipse.jetty.websocket.api.StatusCode;
 import org.javatuples.Pair;
 
+import backend.model.Castle;
 import backend.model.Warrior;
 import backend.model.WsResponse;
-import backend.model.board.BoardResponse;
-import backend.model.castle.Castle;
 import backend.model.game.Game;
 import backend.model.game.GameInput;
 import backend.model.game.GameResponse;
