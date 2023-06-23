@@ -36,11 +36,11 @@ public abstract class Unit {
     // tile to another
     public final int movementSpeed;
 
+    // Unit type
     public final UnitType type;
 
     // Take damage form the opponent
     public void takeDamage(int damage) {
-        // TODO: Rewrite taking damage logic
         this.hp -= damage;
     }
 
@@ -85,14 +85,18 @@ public abstract class Unit {
     // override it
     public void findTarget(Board board) {
         int minDist = Integer.MAX_VALUE;
-        // TODO: cycle through castles
+
         for (Entry<String, Unit> entry : board.units.entrySet()) {
+            // https://en.wikipedia.org/wiki/Chebyshev_distance
             var unit = entry.getValue();
+
             if (this.owner == unit.owner)
                 continue;
+
             int xdist = Math.abs(this.position.getValue0() - unit.position.getValue0());
             int ydist = Math.abs(this.position.getValue1() - unit.position.getValue1());
-            int dist = Math.max(xdist, ydist);// https://en.wikipedia.org/wiki/Chebyshev_distance
+            int dist = Math.max(xdist, ydist);
+
             if (dist < minDist) {
                 minDist = dist;
                 this.target = unit;
@@ -119,10 +123,8 @@ public abstract class Unit {
         if (tar1 < cur1)
             --cur1;
 
-        if (cur0 == tar0 && cur1 == tar0) {
-            // moving would "step onto target". Do nothing
-        } else {
-            this.position = new Pair<Integer, Integer>(cur0, cur1);
+        if (!(cur0 == tar0 && cur1 == tar0)) {
+            this.position = Pair.with(cur0, cur1);
         }
     }
 }

@@ -7,9 +7,8 @@ import io.javalin.http.NotFoundResponse;
 import io.javalin.websocket.WsConnectContext;
 import io.javalin.http.ForbiddenResponse;
 
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import org.eclipse.jetty.websocket.api.StatusCode;
 import org.javatuples.Pair;
@@ -69,10 +68,10 @@ public class Controller {
             try {
                 Player opponent = new Player(input.nickname);
                 Castle opponentCastle = g.addOpponent(opponent);
-                g.playerContexts.keySet().forEach(c -> {
-                    if (c.session.isOpen())
-                        c.send(new WsResponse<UnitResponse>("user_joined", new UnitResponse(opponentCastle)));
-                });
+
+                g.playerContexts.keySet().stream().filter(c -> c.session.isOpen())
+                        .forEach(c -> c
+                                .send(new WsResponse<UnitResponse>("user_joined", new UnitResponse(opponentCastle))));
 
                 ctx.json(new GameResponse(g)).status(HttpStatus.CREATED);
             } catch (Exception e) {
@@ -126,29 +125,31 @@ public class Controller {
                             "Invalid owner id!")
                     .get();
 
-            Player owner = g.host.id.equals(input.ownerId) ? g.host
-                    : g.opponent.id.equals(input.ownerId) ? g.opponent : null;
-            if (owner == null)
-                throw new BadRequestResponse("Player not found!");
+            Player owner = List.of(g.host, g.opponent).stream().filter(p -> p.id.equals(input.ownerId)).findFirst()
+                    .orElseThrow(() -> {
+                        throw new BadRequestResponse("Player not found!");
+                    });
 
             Player opponent = g.host.id.equals(input.ownerId) ? g.opponent : g.host;
 
             Unit target = g.board.units.values().stream()
-                    .filter(u -> (u.owner.id.equals(opponent.id)) && (u.type.equals(UnitType.CASTLE)))
-                    .collect(Collectors.toCollection(ArrayList::new)).get(0);
+                    .filter(u -> (u.owner.id.equals(opponent.id)) && (u.type.equals(UnitType.CASTLE))).findFirst()
+                    .orElseThrow(() -> {
+                        throw new BadRequestResponse("Opponent not found!");
+                    });
 
             Unit unit = switch (input.type) {
-                case WARRIOR -> new Warrior(owner, new Pair<>(input.position.x, input.position.y), target);
-                default -> null;
+                case WARRIOR -> new Warrior(owner, Pair.with(input.position.x, input.position.y), target);
+                default -> {
+                    throw new BadRequestResponse("Invalid unit type!");
+                }
             };
 
             try {
                 g.board.placeNewUnit(unit);
 
-                g.playerContexts.keySet().forEach(c -> {
-                    if (c.session.isOpen())
-                        c.send(new WsResponse<UnitResponse>("unit_placed", new UnitResponse(unit)));
-                });
+                g.playerContexts.keySet().stream().filter(c -> c.session.isOpen())
+                        .forEach(c -> c.send(new WsResponse<UnitResponse>("unit_placed", new UnitResponse(unit))));
 
                 ctx.status(HttpStatus.CREATED);
             } catch (Exception e) {

@@ -10,7 +10,6 @@ import org.javatuples.Pair;
 import com.github.shamil.Xid;
 
 import backend.model.Castle;
-import backend.model.Warrior;
 import backend.model.WsResponse;
 import backend.model.board.Board;
 import backend.model.player.Player;
@@ -50,10 +49,9 @@ public class Game {
 
         // Put host's castle on the board
         try {
-            this.board.placeNewUnit(new Castle(host, new Pair<Integer, Integer>(4, 0)));
+            this.board.placeNewUnit(new Castle(host, Pair.with(4, 0)));
         } catch (Exception e) {
-            System.out.println("Something went terribly wrong when putting host's castle on the board:");
-            System.out.println(e);
+            System.out.println("Something went terribly wrong when putting host's castle on the board!");
             System.exit(-1);
         }
     }
@@ -94,10 +92,10 @@ public class Game {
             case INITIATED:
             case PAUSED:
                 this.state = GameState.RUNNING;
-                this.playerContexts.keySet().forEach(c -> {
-                    if (c.session.isOpen())
-                        c.send(new WsResponse<Object>("game_started", null));
-                });
+
+                this.playerContexts.keySet().stream().filter(c -> c.session.isOpen())
+                        .forEach(c -> c.send(new WsResponse<>("game_started")));
+
                 // Start game loop
                 this.loop();
                 break;
@@ -112,10 +110,9 @@ public class Game {
         switch (this.state) {
             case RUNNING:
                 this.state = GameState.PAUSED;
-                this.playerContexts.keySet().forEach(c -> {
-                    if (c.session.isOpen())
-                        c.send(new WsResponse<Object>("game_paused", null));
-                });
+
+                this.playerContexts.keySet().stream().filter(c -> c.session.isOpen())
+                        .forEach(c -> c.send(new WsResponse<>("game_paused")));
                 break;
 
             default:
@@ -130,7 +127,7 @@ public class Game {
 
         this.opponent = opponent;
 
-        Castle opponentCastle = new Castle(opponent, new Pair<Integer, Integer>(4, 11));
+        Castle opponentCastle = new Castle(opponent, Pair.with(4, 11));
 
         this.board.placeNewUnit(opponentCastle);
 

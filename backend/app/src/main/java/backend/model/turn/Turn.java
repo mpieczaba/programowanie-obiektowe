@@ -1,7 +1,6 @@
 package backend.model.turn;
 
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 import backend.model.Boosting;
 import backend.model.Simulation;
@@ -25,8 +24,6 @@ public class Turn {
     }
 
     public void nextTick(Map<WsContext, String> playerContexts) {
-        // System.out.println(this.tick);
-
         if (this.tick == 0) {
             this.state = new Boosting(board);
 

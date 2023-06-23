@@ -1,7 +1,6 @@
 package backend.model.board;
 
 import java.util.Optional;
-import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.javatuples.Pair;
@@ -9,14 +8,16 @@ import org.javatuples.Pair;
 import backend.model.unit.Unit;
 
 public class Board {
-    private final Pair<Integer, Integer> dimension = new Pair<Integer, Integer>(9, 12);
+    // Board dimension
+    private final static Pair<Integer, Integer> dimension = Pair.with(9, 12);
 
-    // unitId:unit
+    // Units on the board
     public final ConcurrentHashMap<String, Unit> units = new ConcurrentHashMap<>();
 
     // Place a new unit on the board
     public void placeNewUnit(Unit unit) throws Exception {
-        if (unit.position.getValue0() >= this.dimension.getValue0() || unit.position.getValue1() >= this.dimension.getValue1())
+        if (unit.position.getValue0() >= dimension.getValue0()
+                || unit.position.getValue1() >= dimension.getValue1())
             throw new Exception("Position is outside of the board!");
 
         if (this.units.putIfAbsent(unit.id, unit) != null)
@@ -25,9 +26,6 @@ public class Board {
 
     // Get unit by position
     public Optional<Unit> getUnitByPosition(Pair<Integer, Integer> position) throws Exception {
-    	for (Entry<String, Unit> e : units.entrySet()) {
-    		if(e.getValue().position.equals(position)) return Optional.of(e.getValue()); 
-    	}
-    	return Optional.empty();
+        return units.values().stream().filter(u -> u.position.equals(position)).findFirst();
     }
 }

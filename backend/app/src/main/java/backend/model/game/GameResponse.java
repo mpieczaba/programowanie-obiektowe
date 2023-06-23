@@ -11,6 +11,7 @@ public class GameResponse {
     // Game host
     public PlayerResponse host;
 
+    // Game opponent
     public PlayerResponse opponent;
 
     // Board
