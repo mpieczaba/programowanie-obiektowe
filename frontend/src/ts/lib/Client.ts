@@ -30,7 +30,7 @@ export default class Client {
 
       switch (res.event) {
         case "user_joined":
-          this.ui.drawUnit(res.data);
+          this.ui.drawUnit(res.data, this.handleUnitClick);
           break;
 
         case "game_started":
@@ -41,7 +41,7 @@ export default class Client {
           break;
 
         case "unit_placed":
-          this.ui.drawUnit(res.data);
+          this.ui.drawUnit(res.data, this.handleUnitClick);
           break;
 
         case "boosting":
@@ -56,10 +56,15 @@ export default class Client {
 
         case "simulation":
           this.ui.deckSelectors.forEach((s) => s.classList.add("locked"));
+
+          this.ui.boosting.hidden = true;
+          this.ui.deck.hidden = false;
           break;
 
         case "session_tick":
-          (res.data as BoardResponse).units.forEach((u) => this.ui.drawUnit(u));
+          (res.data as BoardResponse).units.forEach((u) =>
+            this.ui.drawUnit(u, this.handleUnitClick)
+          );
           break;
 
         case "unit_removed":
@@ -75,6 +80,27 @@ export default class Client {
     };
   };
 
+  public handleUnitClick = async (id: string) => {
+    const res = await fetch(
+      `http://localhost:8080/games/${this.ui.gameId}/units/${id}`,
+      {
+        headers: {
+          Accept: "application/json",
+        },
+      }
+    );
+
+    if (res.status == 200) {
+      res.json().then((data: UnitResponse) => {
+        this.ui.unitHpNumber.innerText = data.hp.toString();
+        this.ui.unitHpProgress.value = data.hp;
+      });
+    }
+
+    this.ui.boosting.hidden = false;
+    this.ui.deck.hidden = true;
+  };
+
   public startGame = async (id: string): Promise<boolean> => {
     const res = await fetch(`http://localhost:8080/games/${id}/start`, {
       method: "POST",
@@ -83,9 +109,7 @@ export default class Client {
       },
     });
 
-    if (res.status == 200) {
-      return true;
-    }
+    if (res.status == 200) return true;
 
     const data: { title: string } = await res.json();
     throw new Error(data.title);
@@ -100,9 +124,7 @@ export default class Client {
       },
     });
 
-    if (res.status == 201) {
-      return res.json();
-    }
+    if (res.status == 201) return res.json();
 
     const data: ResponseError = await res.json();
     throw new Error(data.REQUEST_BODY[0].message);
@@ -115,9 +137,7 @@ export default class Client {
       },
     });
 
-    if (res.status == 200) {
-      return res.json();
-    }
+    if (res.status == 200) return res.json();
 
     const data: ResponseError = await res.json();
     throw new Error(data.REQUEST_BODY[0].message);
@@ -135,15 +155,11 @@ export default class Client {
       },
     });
 
-    if (res.status == 201) {
-      return res.json();
-    }
+    if (res.status == 201) return res.json();
 
     const data: { title: string } = await res.json();
     throw new Error(data.title);
   };
-
-  public getUnit = async (id: string, unitId: string) => {};
 
   public placeUnitOnTheMap = async (
     id: string,

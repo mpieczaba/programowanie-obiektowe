@@ -84,7 +84,9 @@ export default class Controller {
     this.client
       .getGame(this.ui.gameId)
       .then((res) => {
-        res.board.units.forEach((unit) => this.ui.drawUnit(unit));
+        res.board.units.forEach((unit) =>
+          this.ui.drawUnit(unit, this.client.handleUnitClick)
+        );
       })
       .catch((e) => console.log(e));
   };

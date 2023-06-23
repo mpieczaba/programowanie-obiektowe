@@ -67,6 +67,14 @@ export default class UI {
     "castle-hp-progress"
   ) as HTMLProgressElement;
 
+  public unitHpNumber = document.getElementById(
+    "unit-hp-number"
+  ) as HTMLDivElement;
+
+  public unitHpProgress = document.getElementById(
+    "unit-hp-progress"
+  ) as HTMLProgressElement;
+
   constructor() {
     const gameId = new URLSearchParams(window.location.search).get("g");
 
@@ -91,7 +99,7 @@ export default class UI {
     ) as HTMLDivElement;
   }
 
-  public drawUnit(unit: UnitResponse) {
+  public drawUnit(unit: UnitResponse, click: (id: string) => void) {
     const tile = this.getTileByPosition(unit.position);
 
     const prev = document.getElementById(unit.id) as HTMLDivElement;
@@ -137,10 +145,10 @@ export default class UI {
 
         if (unit.owner.id != sessionStorage.getItem("playerId"))
           u.classList.add("opponent");
+        else u.addEventListener("click", () => click(u.id));
 
         if (sessionStorage.getItem("isOpponent") == "true")
           u.classList.add("flip");
-        else u.addEventListener("click", () => {});
 
         u.appendChild(progress);
         u.innerHTML += `<img src="img/WarriorV1.png" />`;
