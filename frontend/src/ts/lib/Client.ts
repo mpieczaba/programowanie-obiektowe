@@ -5,7 +5,7 @@ import GameResponse from "./model/GameResponse.js";
 import PlayerInput from "./model/PlayerInput.js";
 import ResponseError from "./model/ResponseError.js";
 import UnitInput from "./model/UnitInput.js";
-import UnitResponse from "./model/UnitResponse.js";
+import UnitResponse, { UnitType } from "./model/UnitResponse.js";
 import WsResponse from "./model/WsResponse.js";
 
 export default class Client {
@@ -63,9 +63,9 @@ export default class Client {
           break;
 
         case "unit_removed":
-          const prev = document.getElementById(
-            (res.data as UnitResponse).id
-          ) as HTMLDivElement;
+          const u = res.data as UnitResponse;
+          const prev = document.getElementById(u.id) as HTMLDivElement;
+
           if (prev) prev.parentNode?.removeChild(prev);
           break;
 
