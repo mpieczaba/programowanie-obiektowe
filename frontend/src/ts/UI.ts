@@ -145,8 +145,6 @@ export default class UI {
         u.appendChild(progress);
         u.innerHTML += `<img src="img/WarriorV1.png" />`;
 
-        console.log(unit.position);
-
         tile.appendChild(u);
 
         break;

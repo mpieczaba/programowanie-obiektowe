@@ -35,7 +35,7 @@ public class Game {
     public final Board board = new Board();
 
     // Current game turn
-    private Turn currentTurn = new Turn(board);
+    private Turn currentTurn = new Turn(board, this.playerContexts);
 
     // Game state
     private GameState state = GameState.INITIATED;
@@ -74,7 +74,7 @@ public class Game {
                     break;
 
                 default:
-                    this.game.currentTurn.nextTick(this.game.playerContexts);
+                    this.game.currentTurn.nextTick();
             }
         }
     }

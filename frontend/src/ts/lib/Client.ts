@@ -25,7 +25,6 @@ export default class Client {
 
     this.ws.onmessage = (e) => {
       const res: WsResponse<any> = JSON.parse(e.data);
-      console.log(res.event);
 
       let tick = 0;
 
@@ -61,6 +60,13 @@ export default class Client {
 
         case "session_tick":
           (res.data as BoardResponse).units.forEach((u) => this.ui.drawUnit(u));
+          break;
+
+        case "unit_removed":
+          const prev = document.getElementById(
+            (res.data as UnitResponse).id
+          ) as HTMLDivElement;
+          if (prev) prev.parentNode?.removeChild(prev);
           break;
 
         default:

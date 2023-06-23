@@ -1,33 +1,41 @@
 package backend.model;
 
-import java.util.Map.Entry;
+import java.util.Map;
 
 import backend.model.board.Board;
+import backend.model.board.BoardResponse;
 import backend.model.turn.TurnState;
-import backend.model.unit.Unit;
+import backend.model.unit.UnitResponse;
 import backend.model.unit.UnitType;
+import io.javalin.websocket.WsContext;
 
 public class Simulation extends TurnState {
-    public Simulation(Board board) {
-        super(board);
+    public Simulation(Board board, Map<WsContext, String> playerContexts) {
+        super(board, playerContexts);
     }
 
     public void run(int tick) {
-        for (Entry<String, Unit> e : board.units.entrySet()) {
-            var unit = e.getValue();
-            if (unit.type == UnitType.CASTLE)
-                continue;
+        this.board.units.values().forEach(u -> {
+            if (!u.isAlive()) {
+                this.playerContexts.keySet().stream().filter(c -> c.session.isOpen())
+                        .forEach(c -> c.send(new WsResponse<UnitResponse>("unit_removed", new UnitResponse(u))));
 
-            unit.findTarget(board);
-            if (tick % unit.attackSpeed == 0) {
-                unit.giveDamage();
-            }
-            if (tick % unit.movementSpeed == 0) {
-                unit.move();
+                this.board.units.remove(u.id);
             }
 
-            if (!unit.target.isAlive())
-                board.units.remove(unit.target.id);
-        }
+            if (u.type == UnitType.CASTLE)
+                return;
+
+            u.findTarget(this.board);
+
+            if (tick % u.attackSpeed == 0)
+                u.giveDamage();
+
+            if (tick % u.movementSpeed == 0)
+                u.move();
+        });
+
+        this.playerContexts.keySet().stream().filter(c -> c.session.isOpen())
+                .forEach(c -> c.send(new WsResponse<BoardResponse>("session_tick", new BoardResponse(this.board))));
     }
 }

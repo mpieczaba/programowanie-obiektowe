@@ -6,7 +6,6 @@ import backend.model.Boosting;
 import backend.model.Simulation;
 import backend.model.WsResponse;
 import backend.model.board.Board;
-import backend.model.board.BoardResponse;
 import io.javalin.websocket.WsContext;
 
 public class Turn {
@@ -19,37 +18,30 @@ public class Turn {
     // Turn state
     private TurnState state;
 
-    public Turn(Board board) {
+    // Player contexts
+    private final Map<WsContext, String> playerContexts;
+
+    public Turn(Board board, Map<WsContext, String> playerContexts) {
         this.board = board;
+        this.playerContexts = playerContexts;
     }
 
-    public void nextTick(Map<WsContext, String> playerContexts) {
+    public void nextTick() {
         if (this.tick == 0) {
-            this.state = new Boosting(board);
+            this.state = new Boosting(board, this.playerContexts);
 
-            playerContexts.keySet().forEach(c -> {
-                if (c.session.isOpen())
-                    c.send(new WsResponse<Object>("boosting", null));
-            });
+            this.playerContexts.keySet().stream().filter(c -> c.session.isOpen())
+                    .forEach(c -> c.send(new WsResponse<>("boosting")));
         }
 
         if (this.tick == 500) {
-            this.state = new Simulation(board);
+            this.state = new Simulation(board, this.playerContexts);
 
-            playerContexts.keySet().forEach(c -> {
-                if (c.session.isOpen())
-                    c.send(new WsResponse<Object>("simulation", null));
-            });
+            this.playerContexts.keySet().stream().filter(c -> c.session.isOpen())
+                    .forEach(c -> c.send(new WsResponse<>("simulation")));
         }
 
         this.state.run(tick);
-
-        if (this.tick >= 500)
-            playerContexts.keySet().forEach(c -> {
-                if (c.session.isOpen()) {
-                    c.send(new WsResponse<BoardResponse>("session_tick", new BoardResponse(this.board)));
-                }
-            });
 
         this.tick = ++tick % 1000;
     }
