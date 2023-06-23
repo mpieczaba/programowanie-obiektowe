@@ -1,4 +1,4 @@
-package backend.controller;
+package backend;
 
 import io.javalin.http.BadRequestResponse;
 import io.javalin.http.Context;
@@ -27,17 +27,18 @@ import backend.model.unit.Unit;
 import backend.model.unit.UnitInput;
 import backend.model.unit.UnitResponse;
 import backend.model.unit.UnitType;
-import backend.repository.Repository;
 
-// GameController handles and processes requests from /games endpoints 
-public class GameController extends Controller {
-    public GameController(Repository repository) {
-        super(repository);
+// Controller handles and processes requests  
+public class Controller {
+    private final Repository repository;
+
+    public Controller(Repository repository) {
+        this.repository = repository;
     }
 
     // Get game by id
     public void getById(Context ctx, String id) {
-        Optional<Game> game = this.repository.games.getById(id);
+        Optional<Game> game = this.repository.getGameById(id);
 
         game.map(g -> ctx.json(new GameResponse(g))).orElseThrow(() -> {
             throw new NotFoundResponse("Game not found");
@@ -50,8 +51,8 @@ public class GameController extends Controller {
                 .check(g -> g.host.nickname.length() > 3, "Nickname should contain at least four characters!")
                 .get();
 
-        Player host = this.repository.players.create(input.host.nickname);
-        Game game = this.repository.games.create(host);
+        Player host = new Player(input.host.nickname);
+        Game game = this.repository.createGame(host);
 
         ctx.json(new GameResponse(game)).status(HttpStatus.CREATED);
     }
@@ -62,11 +63,12 @@ public class GameController extends Controller {
                 .check(p -> p.nickname.length() > 3, "Nickname should contain at least four characters!")
                 .get();
 
-        Optional<Game> game = this.repository.games.getById(id);
+        Optional<Game> game = this.repository.getGameById(id);
 
         game.ifPresentOrElse(g -> {
             try {
-                Castle opponentCastle = g.addOpponent(new Player(input.nickname));
+                Player opponent = new Player(input.nickname);
+                Castle opponentCastle = g.addOpponent(opponent);
                 g.playerContexts.keySet().forEach(c -> {
                     if (c.session.isOpen())
                         c.send(new WsResponse<UnitResponse>("user_joined", new UnitResponse(opponentCastle)));
@@ -81,9 +83,9 @@ public class GameController extends Controller {
         });
     }
 
-    // Start game
+    // Start the game
     public void start(Context ctx, String id) {
-        Optional<Game> game = this.repository.games.getById(id);
+        Optional<Game> game = this.repository.getGameById(id);
 
         game.ifPresentOrElse(g -> {
             try {
@@ -98,7 +100,7 @@ public class GameController extends Controller {
 
     // Pause the game
     public void pause(Context ctx, String id) {
-        Optional<Game> game = this.repository.games.getById(id);
+        Optional<Game> game = this.repository.getGameById(id);
 
         game.ifPresentOrElse(g -> {
             try {
@@ -111,8 +113,9 @@ public class GameController extends Controller {
         });
     }
 
+    // Place a new unit on the map
     public void placeUnitOnTheMap(Context ctx, String id) {
-        Optional<Game> game = this.repository.games.getById(id);
+        Optional<Game> game = this.repository.getGameById(id);
 
         game.ifPresentOrElse(g -> {
             if (g.opponent == null)
@@ -157,7 +160,7 @@ public class GameController extends Controller {
     }
 
     public void getUnitById(Context ctx, String id, String unitId) {
-        Optional<Game> game = this.repository.games.getById(id);
+        Optional<Game> game = this.repository.getGameById(id);
 
         game.ifPresentOrElse(g -> {
             Optional.ofNullable(g.board.units.get(unitId)).ifPresentOrElse(
@@ -171,7 +174,7 @@ public class GameController extends Controller {
     }
 
     public void boostUnitDamage(Context ctx, String id) {
-        Optional<Game> game = this.repository.games.getById(id);
+        Optional<Game> game = this.repository.getGameById(id);
 
         game.ifPresentOrElse(g -> {
             try {
@@ -188,7 +191,7 @@ public class GameController extends Controller {
     }
 
     public void wsConnect(WsConnectContext ctx, String id) throws Exception {
-        Optional<Game> game = this.repository.games.getById(id);
+        Optional<Game> game = this.repository.getGameById(id);
 
         game.ifPresentOrElse(g -> {
             g.addPlayerWithContext(ctx, id);
