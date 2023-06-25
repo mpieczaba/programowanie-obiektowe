@@ -75,9 +75,17 @@ public abstract class Unit {
     public abstract void boostAttackSpeed();
 
     public void giveDamage() {
+        if(calcDistTo(target) > range) return;
         if (Math.abs(this.position.getValue0() - this.target.position.getValue0()) <= this.range
                 && Math.abs(this.position.getValue1() - this.target.position.getValue1()) <= this.range)
             this.target.takeDamage(this.damage);
+    }
+
+    public int calcDistTo(Unit unit) {
+            int xdist = Math.abs(this.position.getValue0() - unit.position.getValue0());
+            int ydist = Math.abs(this.position.getValue1() - unit.position.getValue1());
+            int dist = Math.max(xdist, ydist);
+            return dist;
     }
 
     // simple targeting scheme used by most units.
@@ -93,10 +101,7 @@ public abstract class Unit {
             if (this.owner == unit.owner)
                 continue;
 
-            int xdist = Math.abs(this.position.getValue0() - unit.position.getValue0());
-            int ydist = Math.abs(this.position.getValue1() - unit.position.getValue1());
-            int dist = Math.max(xdist, ydist);
-
+            var dist = calcDistTo(unit);
             if (dist < minDist) {
                 minDist = dist;
                 this.target = unit;

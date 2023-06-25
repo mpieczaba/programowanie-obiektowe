@@ -11,7 +11,15 @@ public class App {
     public static final Dotenv env = Dotenv.configure().directory("../../").load();
 
     // Javalin server instance
-    private final Javalin server = Javalin.create(cfg -> cfg.plugins.enableDevLogging());
+    private final Javalin server = Javalin.create(cfg -> {
+    	cfg.plugins.enableDevLogging();
+    	cfg.plugins.enableCors(cors -> {
+            cors.add(it -> {
+            	it.anyHost();
+            	//it.allowHost("http://localhost");
+            });
+        });
+    });
 
     public App() {
         // Set up routes
