@@ -25,7 +25,7 @@ public class Board {
     }
 
     // Get unit by position
-    public Optional<Unit> getUnitByPosition(Pair<Integer, Integer> position) throws Exception {
+    public Optional<Unit> getUnitByPosition(Pair<Integer, Integer> position) {
         return units.values().stream().filter(u -> u.position.equals(position)).findFirst();
     }
 }

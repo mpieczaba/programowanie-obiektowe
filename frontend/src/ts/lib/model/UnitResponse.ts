@@ -5,6 +5,7 @@ export enum UnitType {
   CASTLE = "CASTLE",
   WARRIOR = "WARRIOR",
   ARCHER = "ARCHER",
+  BARBARIAN = "BARBARIAN",
 }
 
 export default class UnitResponse {

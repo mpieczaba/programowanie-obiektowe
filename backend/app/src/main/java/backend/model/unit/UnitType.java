@@ -4,4 +4,5 @@ public enum UnitType {
     CASTLE,
     WARRIOR,
     ARCHER,
+    BARBARIAN,
 }
