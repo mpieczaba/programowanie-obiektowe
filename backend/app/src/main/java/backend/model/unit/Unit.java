@@ -74,7 +74,7 @@ public abstract class Unit {
     // Logic under boosting attack speed for a given unit class
     public abstract void boostAttackSpeed();
 
-    public void giveDamage() {
+    public void giveDamage(Board board) {
         if (calcDistTo(target) > range)
             return;
         this.target.takeDamage(this.damage);
@@ -111,7 +111,7 @@ public abstract class Unit {
     // simple moving scheme used by most units
     // units that move differently (like castle that doesn't move at all) should
     // override it
-    public void move() {
+    public void move(Board board) {
         if (this.target == null)
             return;
         int cur0 = this.position.getValue0(), cur1 = this.position.getValue1();

@@ -30,6 +30,6 @@ public class Castle extends Unit {
 	}
 
 	@Override
-	public void move() {
+	public void move(Board board) {
 	}
 }

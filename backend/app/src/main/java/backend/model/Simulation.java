@@ -29,10 +29,10 @@ public class Simulation extends TurnState {
             u.findTarget(this.board);
 
             if (tick % u.attackSpeed == 0)
-                u.giveDamage();
+                u.giveDamage(this.board);
 
             if (tick % u.movementSpeed == 0)
-                u.move();
+                u.move(this.board);
         });
 
         this.playerContexts.keySet().stream().filter(c -> c.session.isOpen())
