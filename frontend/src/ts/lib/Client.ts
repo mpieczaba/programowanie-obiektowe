@@ -71,6 +71,16 @@ export default class Client {
           const u = res.data as UnitResponse;
           const prev = document.getElementById(u.id) as HTMLDivElement;
 
+          if (u.type == UnitType.CASTLE) {
+            this.ui.endText.innerText = `Player ${
+              u.owner.nickname
+            } lost in ${this.ui.turn.innerText.slice(-1)} ${
+              this.ui.turn.innerText.slice(-1) == "1" ? "turn" : "turns"
+            }.`;
+            this.ui.game.hidden = true;
+            this.ui.end.hidden = false;
+          }
+
           if (prev) prev.parentNode?.removeChild(prev);
           break;
 

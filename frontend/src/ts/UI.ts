@@ -77,6 +77,10 @@ export default class UI {
     "unit-hp-progress"
   ) as HTMLProgressElement;
 
+  public end = document.getElementById("end") as HTMLDivElement;
+
+  public endText = document.getElementById("end-text") as HTMLHeadingElement;
+
   constructor() {
     const gameId = new URLSearchParams(window.location.search).get("g");
 
