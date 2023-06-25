@@ -176,18 +176,52 @@ public class Controller {
         });
     }
 
-    public void boostUnitDamage(Context ctx, String id) {
+    public void boostUnitDamage(Context ctx, String id, String unitId) {
         Optional<Game> game = this.repository.getGameById(id);
 
         game.ifPresentOrElse(g -> {
-            try {
-                g.board.getUnitByPosition(new Pair<Integer, Integer>(0, 0))
-                        .ifPresentOrElse(u -> u.boostDamage(), () -> {
-                            throw new NotFoundResponse("Unit not found");
-                        });
-            } catch (Exception e) {
-                throw new NotFoundResponse("Unit not found");
-            }
+            Optional.ofNullable(g.board.units.get(unitId)).ifPresentOrElse(
+                    u -> {
+                        u.boostDamage();
+                        ctx.status(200).json(new UnitResponse(u));
+                    },
+                    () -> {
+                        throw new NotFoundResponse("Unit not found");
+                    });
+        }, () -> {
+            throw new NotFoundResponse("Game not found");
+        });
+    }
+
+    public void boostUnitAttackSpeed(Context ctx, String id, String unitId) {
+        Optional<Game> game = this.repository.getGameById(id);
+
+        game.ifPresentOrElse(g -> {
+            Optional.ofNullable(g.board.units.get(unitId)).ifPresentOrElse(
+                    u -> {
+                        u.boostAttackSpeed();
+                        ctx.status(200).json(new UnitResponse(u));
+                    },
+                    () -> {
+                        throw new NotFoundResponse("Unit not found");
+                    });
+        }, () -> {
+            throw new NotFoundResponse("Game not found");
+        });
+    }
+
+    public void boostUnitMovementSpeed(Context ctx, String id, String unitId) {
+        Optional<Game> game = this.repository.getGameById(id);
+
+        game.ifPresentOrElse(g -> {
+            Optional.ofNullable(g.board.units.get(unitId)).ifPresentOrElse(
+                    u -> {
+                        u.boostMovementSpeed();
+                        ctx.status(200).json(new UnitResponse(u));
+                    },
+                    () -> {
+                        throw new NotFoundResponse("Unit not found");
+                    });
         }, () -> {
             throw new NotFoundResponse("Game not found");
         });

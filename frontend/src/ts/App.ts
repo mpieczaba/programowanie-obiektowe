@@ -39,5 +39,20 @@ export default class App {
     });
 
     this.ui.closeButton.addEventListener("click", this.controller.handleClose);
+
+    this.ui.unitDamageButton.addEventListener(
+      "click",
+      this.controller.boostDamage
+    );
+
+    this.ui.unitAttackSpeedButton.addEventListener(
+      "click",
+      this.controller.boostAttackSpeed
+    );
+
+    this.ui.unitMovementSpeedButton.addEventListener(
+      "click",
+      this.controller.boostMovementSpeed
+    );
   }
 }

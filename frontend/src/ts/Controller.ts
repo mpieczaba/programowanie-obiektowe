@@ -4,7 +4,7 @@ import GameInput from "./lib/model/GameInput.js";
 import PlayerInput from "./lib/model/PlayerInput.js";
 import Position from "./lib/model/Position.js";
 import UnitInput from "./lib/model/UnitInput.js";
-import { UnitType } from "./lib/model/UnitResponse.js";
+import UnitResponse, { UnitType } from "./lib/model/UnitResponse.js";
 
 export default class Controller {
   private client;
@@ -25,6 +25,7 @@ export default class Controller {
     const nick = data.get("nick")!.toString();
 
     switch (nick.toLowerCase()) {
+      // Easter egg
       case "jan paweł 2":
       case "jan paweł ii":
         this.ui.updateBalloon(
@@ -128,6 +129,33 @@ export default class Controller {
           selector.classList.add("locked");
           selector.classList.add("empty");
         }
+      })
+      .catch((e) => console.log(e));
+  };
+
+  public boostDamage = () => {
+    this.client
+      .boostUnitDamage(this.ui.gameId!, this.ui.unitId.value)
+      .then((res: UnitResponse) => {
+        this.ui.unitDamageCount.innerText = res.damage.toString();
+      })
+      .catch((e) => console.log(e));
+  };
+
+  public boostAttackSpeed = () => {
+    this.client
+      .boostUnitAttackSpeed(this.ui.gameId!, this.ui.unitId.value)
+      .then((res: UnitResponse) => {
+        this.ui.unitAttackSpeedCount.innerText = res.attackSpeed.toString();
+      })
+      .catch((e) => console.log(e));
+  };
+
+  public boostMovementSpeed = () => {
+    this.client
+      .boostUnitMovementSpeed(this.ui.gameId!, this.ui.unitId.value)
+      .then((res: UnitResponse) => {
+        this.ui.unitMovementSpeedCount.innerText = res.movementSpeed.toString();
       })
       .catch((e) => console.log(e));
   };

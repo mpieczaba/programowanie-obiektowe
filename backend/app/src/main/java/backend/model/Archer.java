@@ -18,12 +18,11 @@ public class Archer extends Unit {
 
     @Override
     public void boostMovementSpeed() {
-        // TODO: Implement boosting movement speed logic
-
+        this.movementSpeed += 10;
     }
 
     @Override
     public void boostAttackSpeed() {
-        // TODO: Implement boosting attack speed logic
+        this.attackSpeed += 10;
     }
 }

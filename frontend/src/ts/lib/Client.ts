@@ -102,8 +102,13 @@ export default class Client {
 
     if (res.status == 200) {
       res.json().then((data: UnitResponse) => {
+        this.ui.unitId.value = data.id;
         this.ui.unitHpNumber.innerText = data.hp.toString();
         this.ui.unitHpProgress.value = data.hp;
+        this.ui.unitDamageCount.innerText = data.damage.toString();
+        this.ui.unitAttackSpeedCount.innerText = data.attackSpeed.toString();
+        this.ui.unitMovementSpeedCount.innerText =
+          data.movementSpeed.toString();
 
         switch (data.type) {
           case UnitType.WARRIOR:
@@ -196,9 +201,67 @@ export default class Client {
       },
     });
 
-    if (res.status == 201) {
-      return true;
-    }
+    if (res.status == 201) return true;
+
+    const data: { title: string } = await res.json();
+    throw new Error(data.title);
+  };
+
+  public boostUnitDamage = async (
+    id: string,
+    unitId: string
+  ): Promise<UnitResponse> => {
+    const res = await fetch(
+      `http://localhost:8080/games/${id}/units/${unitId}/boost/damage`,
+      {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+        },
+      }
+    );
+
+    if (res.status == 200) return res.json();
+
+    const data: { title: string } = await res.json();
+    throw new Error(data.title);
+  };
+
+  public boostUnitAttackSpeed = async (
+    id: string,
+    unitId: string
+  ): Promise<UnitResponse> => {
+    const res = await fetch(
+      `http://localhost:8080/games/${id}/units/${unitId}/boost/attack_speed`,
+      {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+        },
+      }
+    );
+
+    if (res.status == 200) return res.json();
+
+    const data: { title: string } = await res.json();
+    throw new Error(data.title);
+  };
+
+  public boostUnitMovementSpeed = async (
+    id: string,
+    unitId: string
+  ): Promise<UnitResponse> => {
+    const res = await fetch(
+      `http://localhost:8080/games/${id}/units/${unitId}/boost/movement_speed`,
+      {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+        },
+      }
+    );
+
+    if (res.status == 200) return res.json();
 
     const data: { title: string } = await res.json();
     throw new Error(data.title);

@@ -14,6 +14,8 @@ export default class UnitResponse {
   public owner: PlayerResponse;
   public range: number;
   public damage: number;
+  public attackSpeed: number;
+  public movementSpeed: number;
   public type: UnitType;
 
   constructor(
@@ -21,6 +23,8 @@ export default class UnitResponse {
     range: number,
     hp: number,
     damage: number,
+    attackSpeed: number,
+    movementSpeed: number,
     position: Position,
     owner: PlayerResponse,
     type: UnitType
@@ -31,6 +35,8 @@ export default class UnitResponse {
     this.owner = owner;
     this.range = range;
     this.damage = damage;
+    this.attackSpeed = attackSpeed;
+    this.movementSpeed = movementSpeed;
     this.type = type;
   }
 }

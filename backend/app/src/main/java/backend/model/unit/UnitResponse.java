@@ -9,6 +9,8 @@ public class UnitResponse {
     public int hp;
     public PlayerResponse owner;
     public int damage;
+    public int attackSpeed;
+    public int movementSpeed;
     public int range;
     public UnitType type;
 
@@ -18,6 +20,8 @@ public class UnitResponse {
         this.hp = unit.hp;
         this.owner = new PlayerResponse(unit.owner);
         this.damage = unit.damage;
+        this.attackSpeed = unit.attackSpeed;
+        this.movementSpeed = unit.movementSpeed;
         this.range = unit.range;
         this.type = unit.type;
     }

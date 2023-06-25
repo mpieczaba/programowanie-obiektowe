@@ -29,6 +29,32 @@ export default class UI {
 
   public boosting = document.getElementById("boosting") as HTMLDivElement;
 
+  public unitId = document.getElementById("unit-id") as HTMLInputElement;
+
+  public unitDamageCount = document.getElementById(
+    "unit-damage-count"
+  ) as HTMLDivElement;
+
+  public unitAttackSpeedCount = document.getElementById(
+    "unit-attack-speed-count"
+  ) as HTMLDivElement;
+
+  public unitMovementSpeedCount = document.getElementById(
+    "unit-movement-speed-count"
+  ) as HTMLDivElement;
+
+  public unitDamageButton = document.getElementById(
+    "unit-damage-button"
+  ) as HTMLButtonElement;
+
+  public unitAttackSpeedButton = document.getElementById(
+    "unit-attack-speed-button"
+  ) as HTMLButtonElement;
+
+  public unitMovementSpeedButton = document.getElementById(
+    "unit-movement-speed-button"
+  ) as HTMLButtonElement;
+
   public playButton = document.getElementById("play-button") as HTMLDivElement;
 
   public playButtonText = document.getElementById(

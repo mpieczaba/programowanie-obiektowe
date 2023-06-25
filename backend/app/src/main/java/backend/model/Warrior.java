@@ -18,12 +18,11 @@ public class Warrior extends Unit {
 
     @Override
     public void boostMovementSpeed() {
-        // TODO: Implement boosting movement speed logic
-
+        this.movementSpeed += 5;
     }
 
     @Override
     public void boostAttackSpeed() {
-        // TODO: Implement boosting attack speed logic
+        this.attackSpeed += 5;
     }
 }

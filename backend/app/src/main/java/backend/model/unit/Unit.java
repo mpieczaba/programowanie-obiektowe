@@ -30,11 +30,11 @@ public abstract class Unit {
     public int damage;
 
     // Ticks between hits
-    public final int attackSpeed;
+    public int attackSpeed;
 
     // Value represented in ticks that defines time in which unit moves from one
     // tile to another
-    public final int movementSpeed;
+    public int movementSpeed;
 
     // Unit type
     public final UnitType type;
@@ -75,17 +75,18 @@ public abstract class Unit {
     public abstract void boostAttackSpeed();
 
     public void giveDamage() {
-        if(calcDistTo(target) > range) return;
+        if (calcDistTo(target) > range)
+            return;
         if (Math.abs(this.position.getValue0() - this.target.position.getValue0()) <= this.range
                 && Math.abs(this.position.getValue1() - this.target.position.getValue1()) <= this.range)
             this.target.takeDamage(this.damage);
     }
 
     public int calcDistTo(Unit unit) {
-            int xdist = Math.abs(this.position.getValue0() - unit.position.getValue0());
-            int ydist = Math.abs(this.position.getValue1() - unit.position.getValue1());
-            int dist = Math.max(xdist, ydist);
-            return dist;
+        int xdist = Math.abs(this.position.getValue0() - unit.position.getValue0());
+        int ydist = Math.abs(this.position.getValue1() - unit.position.getValue1());
+        int dist = Math.max(xdist, ydist);
+        return dist;
     }
 
     // simple targeting scheme used by most units.

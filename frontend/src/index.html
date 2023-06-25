@@ -193,6 +193,8 @@
 
           <p class="title">Unit stats</p>
 
+          <input id="unit-id" type="text" hidden />
+
           <div id="unit" class="stats">
             <img id="unit-image" src="img/WarriorV1.png" />
 
@@ -218,10 +220,14 @@
           <div id="unit-damage-wrapper" class="unit-stat-wrapper">
             <div class="unit-damage-row">
               <span>Damage:</span>
-              <div>30</div>
+              <div id="unit-damage-count">30</div>
             </div>
 
-            <button type="button" class="nes-btn is-primary boost-button">
+            <button
+              id="unit-damage-button"
+              type="button"
+              class="nes-btn is-primary boost-button"
+            >
               Boost
             </button>
           </div>
@@ -229,10 +235,14 @@
           <div id="unit-attack-speed-wrapper" class="unit-stat-wrapper">
             <div class="unit-damage-row">
               <span>Attack speed:</span>
-              <div>30</div>
+              <div id="unit-attack-speed-count">30</div>
             </div>
 
-            <button type="button" class="nes-btn is-primary boost-button">
+            <button
+              id="unit-attack-speed-button"
+              type="button"
+              class="nes-btn is-primary boost-button"
+            >
               Boost
             </button>
           </div>
@@ -240,10 +250,14 @@
           <div id="unit-movement-speed-wrapper" class="unit-stat-wrapper">
             <div class="unit-damage-row">
               <span>Movement speed:</span>
-              <div>30</div>
+              <div id="unit-movement-speed-count">30</div>
             </div>
 
-            <button type="button" class="nes-btn is-primary boost-button">
+            <button
+              id="unit-movement-speed-button"
+              type="button"
+              class="nes-btn is-primary boost-button"
+            >
               Boost
             </button>
           </div>

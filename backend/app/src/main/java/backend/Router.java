@@ -10,44 +10,52 @@ public class Router {
     private final static Repository repository = new Repository();
 
     private static final void gameRoutes() {
-        final Controller gameController = new Controller(repository);
+        final Controller controller = new Controller(repository);
 
         path("{game_id}", () -> {
             // GET /games/:id
-            get(ctx -> gameController.getById(ctx, ctx.pathParam("game_id")));
+            get(ctx -> controller.getById(ctx, ctx.pathParam("game_id")));
 
             // POST /games/:id/join
-            post("join", ctx -> gameController.join(ctx, ctx.pathParam("game_id")));
+            post("join", ctx -> controller.join(ctx, ctx.pathParam("game_id")));
 
             // POST /games/:id/start
-            post("start", ctx -> gameController.start(ctx, ctx.pathParam("game_id")));
+            post("start", ctx -> controller.start(ctx, ctx.pathParam("game_id")));
 
             // POST /games/:id/pause
-            post("pause", ctx -> gameController.pause(ctx, ctx.pathParam("game_id")));
+            post("pause", ctx -> controller.pause(ctx, ctx.pathParam("game_id")));
 
             path("units", () -> {
                 path("{unit_id}", () -> {
                     // GET /games:id/units/:id
-                    get(ctx -> gameController.getUnitById(ctx, ctx.pathParam("game_id"), ctx.pathParam("unit_id")));
+                    get(ctx -> controller.getUnitById(ctx, ctx.pathParam("game_id"), ctx.pathParam("unit_id")));
+
+                    path("boost", () -> {
+                        // POST /games:id/units/:id/boost/damage
+                        post("damage", ctx -> controller.boostUnitDamage(ctx, ctx.pathParam("game_id"),
+                                ctx.pathParam("unit_id")));
+
+                        // POST /games:id/units/:id/boost/damage
+                        post("attack_speed", ctx -> controller.boostUnitAttackSpeed(ctx, ctx.pathParam("game_id"),
+                                ctx.pathParam("unit_id")));
+
+                        // POST /games:id/units/:id/boost/damage
+                        post("movement_speed", ctx -> controller.boostUnitMovementSpeed(ctx, ctx.pathParam("game_id"),
+                                ctx.pathParam("unit_id")));
+                    });
                 });
 
                 // POST /games/:id/units/place
-                post("place", ctx -> gameController.placeUnitOnTheMap(ctx, ctx.pathParam("game_id")));
-
-                // POST /games/:id:units/:id/boost
-                path("boost", () -> {
-                    // POST /games/:id/units/boost/damage
-                    post("damage", ctx -> gameController.boostUnitDamage(ctx, ctx.pathParam("game_id")));
-                });
+                post("place", ctx -> controller.placeUnitOnTheMap(ctx, ctx.pathParam("game_id")));
             });
 
             ws(ws -> {
-                ws.onConnect(ctx -> gameController.wsConnect(ctx, ctx.pathParam("game_id")));
+                ws.onConnect(ctx -> controller.wsConnect(ctx, ctx.pathParam("game_id")));
             });
         });
 
         // POST /games
-        post(ctx -> gameController.create(ctx));
+        post(ctx -> controller.create(ctx));
     }
 
     public static final void getRoutes() {
