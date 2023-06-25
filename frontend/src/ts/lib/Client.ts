@@ -120,7 +120,7 @@ export default class Client {
             break;
 
           case UnitType.BARBARIAN:
-            u.innerHTML += `<img src="img/barbarianV1.png" />`;
+            this.ui.unitImage.src = `img/barbarianV1.png`;
             break;
 
           default:
