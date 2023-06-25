@@ -94,6 +94,19 @@ export default class Client {
       res.json().then((data: UnitResponse) => {
         this.ui.unitHpNumber.innerText = data.hp.toString();
         this.ui.unitHpProgress.value = data.hp;
+
+        switch (data.type) {
+          case UnitType.WARRIOR:
+            this.ui.unitImage.src = "img/WarriorV1.png";
+            break;
+
+          case UnitType.ARCHER:
+            this.ui.unitImage.src = "img/archer.png";
+            break;
+
+          default:
+            break;
+        }
       });
     }
 

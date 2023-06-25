@@ -13,6 +13,7 @@ import java.util.Optional;
 import org.eclipse.jetty.websocket.api.StatusCode;
 import org.javatuples.Pair;
 
+import backend.model.Archer;
 import backend.model.Castle;
 import backend.model.Warrior;
 import backend.model.WsResponse;
@@ -140,6 +141,7 @@ public class Controller {
 
             Unit unit = switch (input.type) {
                 case WARRIOR -> new Warrior(owner, Pair.with(input.position.x, input.position.y), target);
+                case ARCHER -> new Archer(owner, Pair.with(input.position.x, input.position.y), target);
                 default -> {
                     throw new BadRequestResponse("Invalid unit type!");
                 }

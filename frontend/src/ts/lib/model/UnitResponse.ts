@@ -4,6 +4,7 @@ import Position from "./Position.js";
 export enum UnitType {
   CASTLE = "CASTLE",
   WARRIOR = "WARRIOR",
+  ARCHER = "ARCHER",
 }
 
 export default class UnitResponse {

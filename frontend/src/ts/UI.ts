@@ -45,6 +45,8 @@ export default class UI {
     "turn-counter"
   ) as HTMLDivElement;
 
+  public unitImage = document.getElementById("unit-image") as HTMLImageElement;
+
   public closeButton = document.getElementById(
     "close-button"
   ) as HTMLDivElement;
@@ -151,7 +153,19 @@ export default class UI {
           u.classList.add("flip");
 
         u.appendChild(progress);
-        u.innerHTML += `<img src="img/WarriorV1.png" />`;
+
+        switch (unit.type) {
+          case UnitType.WARRIOR:
+            u.innerHTML += `<img src="img/WarriorV1.png" />`;
+            break;
+
+          case UnitType.ARCHER:
+            u.innerHTML += `<img src="img/archer.png" />`;
+            break;
+
+          default:
+            break;
+        }
 
         tile.appendChild(u);
 
