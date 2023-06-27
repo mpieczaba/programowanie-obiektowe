@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Programowanie obiektowe</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://unpkg.com/nes.icons@latest/css/nes-icons.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://unpkg.com/nes.css@2.3.0/css/nes.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <main class="nes-container">
+      <section
+        id="new-game"
+        class="nes-container is-centered is-rounded"
+        hidden
+      >
+        <h1>Create or join the game</h1>
+
+        <form id="new-game-form" action="#">
+          <div class="nes-field">
+            <label for="nick-input">Your name</label>
+            <input
+              type="text"
+              id="nick-input"
+              name="nick"
+              class="nes-input"
+              placeholder="CoolNick1234"
+            />
+          </div>
+
+          <div class="nes-field">
+            <label for="game-input">Game ID (optional)</label>
+            <input
+              type="text"
+              id="game-input"
+              name="game-id"
+              class="nes-input"
+              placeholder="abcdefghij0123456789"
+            />
+          </div>
+
+          <button type="submit" class="nes-btn is-success is-dark">
+            Let's go!
+          </button>
+        </form>
+      </section>
+
+      <section id="balloon" class="message-list" hidden>
+        <section class="message -left">
+          <i class="nes-mario"></i>
+
+          <div class="nes-balloon from-left">
+            <p id="balloon-text"></p>
+          </div>
+        </section>
+      </section>
+
+      <section id="game" hidden>
+        <section id="board" class="nes-container is-rounded is-centered">
+          <div id="map"></div>
+        </section>
+
+        <section
+          id="deck"
+          class="nes-container is-rounded is-centered side-panel"
+        >
+          <p class="title">Deck</p>
+
+          <div id="deck-selectors">
+            <div
+              id="warrior-selector"
+              class="deck-selector nes-container is-rounded nes-pointer locked"
+              draggable
+            >
+              <img src="img/WarriorV1.png" />
+              <div id="warrior-selector-counter" class="deck-selector-counter">
+                x5
+              </div>
+            </div>
+
+            <div
+              id="archer-selector"
+              class="deck-selector nes-container is-rounded nes-pointer locked"
+              draggable
+            >
+              <img src="img/archer.png" />
+              <div id="archer-selector-counter" class="deck-selector-counter">
+                x5
+              </div>
+            </div>
+
+            <div
+              id="barbarian-selector"
+              class="deck-selector nes-container is-rounded nes-pointer locked"
+              draggable
+            >
+              <img src="img/barbarianV1.png" />
+              <div
+                id="barbarian-selector-counter"
+                class="deck-selector-counter"
+              >
+                x5
+              </div>
+            </div>
+
+            <div
+              id="druid-selector"
+              class="deck-selector nes-container is-rounded nes-pointer locked"
+              draggable
+            >
+              <img src="img/druidV1.png" />
+              <div id="druid-selector-counter" class="deck-selector-counter">
+                x5
+              </div>
+            </div>
+
+            <div
+              id="wizard-selector"
+              class="deck-selector nes-container is-rounded nes-pointer locked"
+              draggable
+            >
+              <img src="img/Wizard.png" />
+              <div id="wizard-selector-counter" class="deck-selector-counter">
+                x5
+              </div>
+            </div>
+          </div>
+
+          <p class="title">Castle stats</p>
+
+          <div id="castle" class="stats">
+            <img src="img/CastleRed.png" />
+
+            <div id="castle-hp-wrapper" class="hp-wrapper">
+              <progress
+                id="castle-hp-progress"
+                class="nes-progress is-error hp-progress"
+                value="30"
+                max="100"
+              ></progress>
+
+              <div id="castle-hp-number" class="hp-number">100</div>
+            </div>
+
+            <div id="castle-gold-and-death-count-wrapper">
+              <div>
+                <div>Gold:</div>
+                <div>100</div>
+              </div>
+
+              <div>
+                <div>Deaths:</div>
+                <div>100</div>
+              </div>
+            </div>
+          </div>
+
+          <div id="controls">
+            <div id="turn">Turn: 0</div>
+
+            <div id="turn-counter">0</div>
+
+            <div id="play-button" class="nes-pointer">
+              <i id="play-button-icon" class="nes-icon size-1x play"></i>
+              <span id="play-button-text">Play</span>
+            </div>
+          </div>
+        </section>
+
+        <section
+          id="boosting"
+          class="nes-container is-rounded is-centered side-panel"
+          hidden
+        >
+          <div id="close-button" class="nes-pointer">
+            <i class="nes-icon size-1x times"></i>
+          </div>
+
+          <p class="title">Unit stats</p>
+
+          <input id="unit-id" type="text" hidden />
+
+          <div id="unit" class="stats">
+            <img id="unit-image" src="img/WarriorV1.png" />
+
+            <div id="unit-hp-wrapper" class="hp-wrapper">
+              <progress
+                id="unit-hp-progress"
+                class="nes-progress is-error hp-progress"
+                value="30"
+                max="100"
+              ></progress>
+
+              <div id="unit-hp-number" class="hp-number">100</div>
+            </div>
+          </div>
+
+          <div id="unit-range-wrapper" class="unit-stat-wrapper">
+            <div class="unit-damage-row">
+              <span>Range:</span>
+              <div>1</div>
+            </div>
+          </div>
+
+          <div id="unit-damage-wrapper" class="unit-stat-wrapper">
+            <div class="unit-damage-row">
+              <span>Damage:</span>
+              <div id="unit-damage-count">30</div>
+            </div>
+
+            <button
+              id="unit-damage-button"
+              type="button"
+              class="nes-btn is-primary boost-button"
+            >
+              Boost
+            </button>
+          </div>
+
+          <div id="unit-attack-speed-wrapper" class="unit-stat-wrapper">
+            <div class="unit-damage-row">
+              <span>Attack speed:</span>
+              <div id="unit-attack-speed-count">30</div>
+            </div>
+
+            <button
+              id="unit-attack-speed-button"
+              type="button"
+              class="nes-btn is-primary boost-button"
+            >
+              Boost
+            </button>
+          </div>
+
+          <div id="unit-movement-speed-wrapper" class="unit-stat-wrapper">
+            <div class="unit-damage-row">
+              <span>Movement speed:</span>
+              <div id="unit-movement-speed-count">30</div>
+            </div>
+
+            <button
+              id="unit-movement-speed-button"
+              type="button"
+              class="nes-btn is-primary boost-button"
+            >
+              Boost
+            </button>
+          </div>
+        </section>
+      </section>
+
+      <section id="end" hidden>
+        <h1>The game is over!</h1>
+        <h2 id="end-text"></h2>
+      </section>
+    </main>
+
+    <script type="module" src="js/main.js"></script>
+  </body>
+</html>
